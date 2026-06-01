@@ -3,418 +3,580 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestão Fono</title>
+<title>Gestão Fono - Verde Escuro, Nude e Lilás</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --teal:#1D9E75;--teal-d:#0F6E56;--teal-l:#E1F5EE;--teal-m:#9FE1CB;
-  --amber:#BA7517;--amber-l:#FAEEDA;
-  --red:#A32D2D;--red-l:#FCEBEB;
-  --green:#639922;--green-l:#EAF3DE;--green-d:#27500A;
-  --gray:#5F5E5A;--gray-l:#F1EFE8;
-  --bg:#ffffff;--bg2:#f7f7f5;--bg3:#f0efe9;
-  --text:#1a1a18;--text2:#5f5e5a;--text3:#8f8e8a;
-  --border:rgba(0,0,0,0.1);--border2:rgba(0,0,0,0.18);
-  --radius:8px;--radius-lg:12px;
-  --shadow:0 1px 3px rgba(0,0,0,0.08);
+/* CORES PRINCIPAIS */
+:root {
+  --cor-verde-escuro: #556B4D;
+  --cor-verde-escuro-dark: #3D5436;
+  --cor-verde-claro: #D9E8D1;
+  --cor-nude: #F5E6D3;
+  --cor-nude-claro: #FAF4ED;
+  --cor-lilas: #E8D4F0;
+  --cor-lilas-escuro: #D4AADB;
+  --cor-branco: #FFFFFF;
+  --cor-texto: #1a1a18;
+  --cor-texto-cinza: #5f5e5a;
+  --cor-border: #E0E0E0;
+  --cor-vermelho: #A32D2D;
+  --cor-verde: #639922;
 }
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg3);color:var(--text);min-height:100vh}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: #f5f3f0;
+  color: var(--cor-texto);
+}
 
 /* HEADER */
-.header{background:var(--bg);border-bottom:1px solid var(--border);padding:0 1.25rem;display:flex;align-items:center;gap:12px;height:52px;position:sticky;top:0;z-index:50}
-.header-logo{width:32px;height:32px;background:var(--teal);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:13px;flex-shrink:0}
-.header-title{font-size:15px;font-weight:600;color:var(--text)}
-.header-sub{font-size:12px;color:var(--text3);margin-left:auto}
-.sync-btn{padding:5px 10px;font-size:12px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);cursor:pointer;color:var(--text2);display:flex;align-items:center;gap:5px}
-.sync-btn:hover{background:var(--bg2)}
-.sync-btn.syncing{color:var(--teal)}
-.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--gray);flex-shrink:0}
-.sync-dot.ok{background:var(--green)}
-.sync-dot.err{background:var(--red)}
-.sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.header {
+  background: var(--cor-branco);
+  border-bottom: 2px solid var(--cor-verde-escuro);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
 
-/* LAYOUT */
-.container{max-width:680px;margin:0 auto;padding:1rem}
+.logo {
+  width: 40px;
+  height: 40px;
+  background: var(--cor-verde-escuro);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--cor-branco);
+  font-weight: bold;
+  font-size: 18px;
+}
 
-/* TABS */
-.tabs{display:flex;gap:2px;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:4px;margin-bottom:1rem}
-.tab{flex:1;padding:7px 4px;font-size:13px;border:none;background:transparent;cursor:pointer;color:var(--text2);border-radius:var(--radius);transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px}
-.tab.active{background:var(--teal);color:white;font-weight:500}
-.tab svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.titulo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+}
 
-/* SECTION */
-.section{display:none}.section.active{display:block}
+/* CONTAINER */
+.container {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
 
-/* METRICS */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
-.metric{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.75rem 1rem}
-.metric .label{font-size:11px;color:var(--text3);margin-bottom:2px}
-.metric .value{font-size:20px;font-weight:600;color:var(--text)}
-.metric .value.green{color:var(--green)}
-.metric .value.red{color:var(--red)}
-.metric .value.amber{color:var(--amber)}
-@media(max-width:480px){.metrics{grid-template-columns:repeat(2,1fr)}}
+/* ABAS */
+.abas {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 2rem;
+  background: var(--cor-branco);
+  padding: 8px;
+  border-radius: 12px;
+  border: 1px solid var(--cor-border);
+}
 
-/* CARD */
-.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:1rem}
-.card-header{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1rem;border-bottom:1px solid var(--border)}
-.card-title{font-size:14px;font-weight:600}
-.card-body{padding:.75rem 1rem}
+.aba {
+  flex: 1;
+  padding: 10px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 8px;
+  color: var(--cor-texto-cinza);
+  transition: all 0.2s;
+}
 
-/* BUTTONS */
-.btn{padding:6px 12px;font-size:13px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);cursor:pointer;color:var(--text);display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
-.btn:hover{background:var(--bg2)}.btn:active{transform:scale(.98)}
-.btn-primary{background:var(--teal);color:white;border-color:var(--teal)}
-.btn-primary:hover{background:var(--teal-d)}
-.btn-sm{padding:4px 9px;font-size:12px}
-.btn-ghost{border-color:transparent;background:transparent;padding:4px 8px}
-.btn-ghost:hover{background:var(--bg2)}
-.btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.aba.ativo {
+  background: var(--cor-verde-escuro);
+  color: var(--cor-branco);
+}
 
-/* LIST ITEMS */
-.item{display:flex;align-items:center;gap:10px;padding:.625rem .75rem;border-bottom:1px solid var(--border);transition:background .1s}
-.item:last-child{border-bottom:none}
-.item:hover{background:var(--bg2)}
-.item-avatar{width:34px;height:34px;border-radius:50%;background:var(--teal-l);color:var(--teal-d);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.item-info{flex:1;min-width:0}
-.item-name{font-size:14px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.item-meta{font-size:12px;color:var(--text3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.item-actions{display:flex;gap:4px;flex-shrink:0}
+.aba:hover {
+  background: var(--cor-nude-claro);
+}
 
-/* SESSAO ITEM */
-.sessao-item{display:grid;grid-template-columns:72px 1fr auto auto;gap:8px;align-items:center;padding:.625rem .75rem;border-bottom:1px solid var(--border)}
-.sessao-item:last-child{border-bottom:none}
-.sessao-item:hover{background:var(--bg2)}
-.sessao-data{font-size:12px;color:var(--text3);line-height:1.3}
+/* SECOES */
+.secao {
+  display: none;
+}
 
-/* BADGES */
-.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:11px;font-weight:500;cursor:pointer;border:none;white-space:nowrap}
-.badge-pago{background:var(--green-l);color:var(--green-d)}
-.badge-pendente{background:var(--amber-l);color:var(--amber)}
-.badge-atrasado{background:var(--red-l);color:var(--red)}
-.badge-cancelada{background:var(--gray-l);color:var(--gray)}
-.badge-confirmada{background:var(--teal-l);color:var(--teal-d)}
-.badge-aguardando{background:var(--amber-l);color:var(--amber)}
+.secao.ativa {
+  display: block;
+}
+
+/* CARDS */
+.card {
+  background: var(--cor-branco);
+  border: 1px solid var(--cor-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.card-titulo {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 1rem;
+  border-bottom: 2px solid var(--cor-lilas);
+  padding-bottom: 0.75rem;
+}
+
+/* METRICAS */
+.metricas {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.metrica {
+  background: var(--cor-nude);
+  border: 1px solid var(--cor-lilas);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+}
+
+.metrica-label {
+  font-size: 12px;
+  color: var(--cor-texto-cinza);
+  margin-bottom: 5px;
+}
+
+.metrica-valor {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+}
+
+/* BOTOES */
+.btn {
+  padding: 8px 16px;
+  background: var(--cor-verde-escuro);
+  color: var(--cor-branco);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: var(--cor-verde-escuro-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(45, 122, 99, 0.3);
+}
+
+.btn-pequeno {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-secundario {
+  background: var(--cor-lilas);
+  color: var(--cor-texto);
+}
+
+.btn-secundario:hover {
+  background: var(--cor-lilas-escuro);
+}
+
+/* INPUTS */
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--cor-border);
+  border-radius: 8px;
+  font-size: 13px;
+  font-family: inherit;
+  margin-bottom: 10px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--cor-verde-escuro);
+  background-color: var(--cor-nude-claro);
+  box-shadow: 0 0 0 3px var(--cor-verde-claro);
+}
 
 /* FORM */
-.form-row{display:grid;gap:10px;margin-bottom:10px}
-.form-row.cols2{grid-template-columns:1fr 1fr}
-.form-row.cols3{grid-template-columns:1fr 1fr 1fr}
-.form-group{display:flex;flex-direction:column;gap:3px}
-.form-group label{font-size:12px;color:var(--text2);font-weight:500}
-.form-group input,.form-group select,.form-group textarea{
-  width:100%;padding:7px 10px;font-size:13px;
-  border:1px solid var(--border2);border-radius:var(--radius);
-  background:var(--bg);color:var(--text);
-  font-family:inherit;
+.form-linha {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 15px;
 }
-.form-group input:focus,.form-group select:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 2px rgba(29,158,117,.15)}
-.form-group textarea{resize:vertical;min-height:60px;line-height:1.5}
-@media(max-width:480px){.form-row.cols2,.form-row.cols3{grid-template-columns:1fr}}
+
+.form-grupo {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-grupo label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 5px;
+}
+
+/* LISTA */
+.lista-item {
+  background: var(--cor-nude-claro);
+  border-left: 4px solid var(--cor-verde-escuro);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.lista-item-nome {
+  font-weight: 600;
+  color: var(--cor-verde-escuro);
+}
+
+.lista-item-info {
+  font-size: 12px;
+  color: var(--cor-texto-cinza);
+}
+
+/* BADGES */
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.badge-verde {
+  background: var(--cor-verde-claro);
+  color: var(--cor-verde-escuro);
+}
+
+.badge-lilас {
+  background: var(--cor-lilas);
+  color: var(--cor-texto);
+}
+
+.badge-vermelho {
+  background: #FFCCCB;
+  color: var(--cor-vermelho);
+}
+
+/* AVISO SYNC */
+.aviso-sync {
+  background: var(--cor-lilas);
+  border: 1px solid var(--cor-lilas-escuro);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 1rem;
+  font-size: 13px;
+  color: var(--cor-texto);
+}
 
 /* MODAL */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:flex-end;justify-content:center;padding:0}
-.modal-overlay.open{display:flex}
-@media(min-width:480px){.modal-overlay{align-items:center;padding:1rem}}
-.modal{background:var(--bg);border-radius:var(--radius-lg) var(--radius-lg) 0 0;width:100%;max-width:460px;max-height:90vh;overflow-y:auto;padding:1.25rem}
-@media(min-width:480px){.modal{border-radius:var(--radius-lg)}}
-.modal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem}
-.modal-title{font-size:15px;font-weight:600}
-.modal-footer{display:flex;gap:8px;justify-content:flex-end;margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)}
+.modal-fundo {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
 
-/* MENSAGENS */
-.msg-types{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:.875rem}
-.msg-type{padding:5px 11px;font-size:12px;border:1px solid var(--border);border-radius:20px;background:var(--bg);cursor:pointer;color:var(--text2)}
-.msg-type.active{background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m)}
-.msg-preview{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius-lg);padding:.875rem;font-size:13px;line-height:1.65;white-space:pre-wrap;color:var(--text);min-height:90px;margin-bottom:.75rem;font-family:inherit}
-.msg-actions{display:flex;gap:8px;flex-wrap:wrap}
+.modal-fundo.aberto {
+  display: flex;
+}
 
-/* POLITICA */
-.politica-box{background:var(--teal-l);border:1px solid var(--teal-m);border-radius:var(--radius-lg);padding:1rem;font-size:13px;line-height:1.65;color:var(--teal-d);white-space:pre-wrap;margin-bottom:.75rem;font-family:inherit}
+.modal {
+  background: var(--cor-branco);
+  border-radius: 12px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
 
-/* SETTINGS */
-.settings-row{display:flex;align-items:center;gap:10px;padding:.75rem 0;border-bottom:1px solid var(--border)}
-.settings-row:last-child{border-bottom:none}
-.settings-label{flex:1;font-size:13px}
-.settings-sub{font-size:11px;color:var(--text3);display:block;margin-top:2px}
-.settings-input{flex:2;font-size:12px;padding:6px 9px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:inherit}
-.settings-input:focus{outline:none;border-color:var(--teal)}
+.modal-titulo {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-verde-escuro);
+  margin-bottom: 1.5rem;
+}
 
-/* TOAST */
-.toast-wrap{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%);z-index:200;display:flex;flex-direction:column;gap:6px;pointer-events:none;min-width:220px}
-.toast{background:var(--text);color:#fff;padding:9px 16px;border-radius:var(--radius-lg);font-size:13px;text-align:center;animation:toastIn .2s ease;pointer-events:none}
-.toast.err{background:var(--red)}
-@keyframes toastIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.modal-rodape {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
 
-/* EMPTY */
-.empty{padding:2rem;text-align:center;color:var(--text3);font-size:13px}
+/* PREVIEW MENSAGEM */
+.preview-msg {
+  background: var(--cor-nude);
+  border: 1px solid var(--cor-lilас);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  color: var(--cor-texto);
+  min-height: 100px;
+  margin: 1rem 0;
+  font-family: 'Courier New', monospace;
+}
 
-/* SYNC CONFIG */
-.sync-config{display:flex;align-items:center;gap:8px;padding:.5rem .75rem;background:var(--amber-l);border-bottom:1px solid rgba(186,117,23,.2);font-size:12px;color:var(--amber)}
-.sync-config a{color:var(--amber);font-weight:500}
+@media (max-width: 600px) {
+  .metricas {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .form-linha {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="header">
-  <div class="header-logo">F</div>
-  <span class="header-title">Gestão Fono</span>
-  <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
-    <span id="sync-dot" class="sync-dot" title="Status da sincronização"></span>
-    <button class="sync-btn" id="sync-btn" onclick="syncAll()">
-      <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
-      Sincronizar
-    </button>
+  <div class="logo">F</div>
+  <div class="titulo">Gestão Fono</div>
+</div>
+
+<!-- AVISO -->
+<div class="container">
+  <div class="aviso-sync" id="aviso">
+    ⚠️ Configure a URL do Apps Script na aba <strong>Configurações</strong> para sincronizar com Google Sheets
   </div>
 </div>
 
-<div id="sync-warn" class="sync-config" style="display:none">
-  Configure o Google Sheets para sincronizar. Vá em <strong style="margin:0 3px">Configuracoes</strong> e cole a URL do Apps Script.
-</div>
-
+<!-- CONTAINER PRINCIPAL -->
 <div class="container">
 
-  <div class="tabs">
-    <button class="tab active" onclick="showTab('agenda',this)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Agenda
-    </button>
-    <button class="tab" onclick="showTab('pacientes',this)">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      Pacientes
-    </button>
-    <button class="tab" onclick="showTab('financeiro',this)">
-      <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-      Financeiro
-    </button>
-    <button class="tab" onclick="showTab('mensagens',this)">
-      <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      Mensagens
-    </button>
-    <button class="tab" onclick="showTab('config',this)">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      Config
-    </button>
+  <!-- ABAS -->
+  <div class="abas">
+    <button class="aba ativo" onclick="trocarAba('agenda')">📅 Agenda</button>
+    <button class="aba" onclick="trocarAba('pacientes')">👥 Pacientes</button>
+    <button class="aba" onclick="trocarAba('financeiro')">💰 Financeiro</button>
+    <button class="aba" onclick="trocarAba('mensagens')">💬 Mensagens</button>
+    <button class="aba" onclick="trocarAba('config')">⚙️ Config</button>
   </div>
 
-  <!-- AGENDA -->
-  <div class="section active" id="tab-agenda">
-    <div class="metrics">
-      <div class="metric"><div class="label">Hoje</div><div class="value" id="m-hoje">0</div></div>
-      <div class="metric"><div class="label">Esta semana</div><div class="value" id="m-semana">0</div></div>
-      <div class="metric"><div class="label">Confirmadas</div><div class="value green" id="m-conf">0</div></div>
-      <div class="metric"><div class="label">Cancelamentos</div><div class="value red" id="m-cancel">0</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Sessoes agendadas</span>
-        <button class="btn btn-primary btn-sm" onclick="openModal('sessao')">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Nova sessao
-        </button>
+  <!-- ABA AGENDA -->
+  <div class="secao ativa" id="agenda">
+    <div class="metricas">
+      <div class="metrica">
+        <div class="metrica-label">Hoje</div>
+        <div class="metrica-valor" id="m-hoje">0</div>
       </div>
-      <div id="agenda-list"><div class="empty">Nenhuma sessao. Adicione a primeira!</div></div>
+      <div class="metrica">
+        <div class="metrica-label">Esta semana</div>
+        <div class="metrica-valor" id="m-semana">0</div>
+      </div>
+      <div class="metrica">
+        <div class="metrica-label">Confirmadas</div>
+        <div class="metrica-valor" id="m-conf">0</div>
+      </div>
+      <div class="metrica">
+        <div class="metrica-label">Canceladas</div>
+        <div class="metrica-valor" id="m-cancel">0</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">Sessões Agendadas</div>
+      <button class="btn btn-pequeno" onclick="abrirModal('sessao')">+ Nova Sessão</button>
+      <div id="lista-agenda" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
-  <!-- PACIENTES -->
-  <div class="section" id="tab-pacientes">
+  <!-- ABA PACIENTES -->
+  <div class="secao" id="pacientes">
     <div class="card">
-      <div class="card-header">
-        <span class="card-title">Pacientes</span>
-        <button class="btn btn-primary btn-sm" onclick="openModal('paciente')">
-          <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Novo paciente
-        </button>
-      </div>
-      <div id="pacientes-list"><div class="empty">Nenhum paciente cadastrado.</div></div>
+      <div class="card-titulo">Pacientes</div>
+      <button class="btn btn-pequeno" onclick="abrirModal('paciente')">+ Novo Paciente</button>
+      <div id="lista-pacientes" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
-  <!-- FINANCEIRO -->
-  <div class="section" id="tab-financeiro">
-    <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
-      <div class="metric"><div class="label">Recebido</div><div class="value green" id="f-rec">R$ 0</div></div>
-      <div class="metric"><div class="label">Pendente</div><div class="value amber" id="f-pend">R$ 0</div></div>
-      <div class="metric"><div class="label">Atrasado</div><div class="value red" id="f-atras">R$ 0</div></div>
-    </div>
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">Controle de pagamentos</span>
-        <button class="btn btn-sm" onclick="exportCSV()">
-          <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Exportar CSV
-        </button>
+  <!-- ABA FINANCEIRO -->
+  <div class="secao" id="financeiro">
+    <div class="metricas">
+      <div class="metrica">
+        <div class="metrica-label">Recebido</div>
+        <div class="metrica-valor" id="f-rec" style="color: var(--cor-verde);">R$ 0</div>
       </div>
-      <div id="financeiro-list"><div class="empty">Nenhuma sessao registrada.</div></div>
+      <div class="metrica">
+        <div class="metrica-label">Pendente</div>
+        <div class="metrica-valor" id="f-pend" style="color: var(--cor-lilас);">R$ 0</div>
+      </div>
+      <div class="metrica">
+        <div class="metrica-label">Atrasado</div>
+        <div class="metrica-valor" id="f-atras" style="color: var(--cor-vermelho);">R$ 0</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">Controle de Pagamentos</div>
+      <button class="btn btn-pequeno" onclick="exportarCSV()">📊 Exportar CSV</button>
+      <div id="lista-financeiro" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
-  <!-- MENSAGENS -->
-  <div class="section" id="tab-mensagens">
+  <!-- ABA MENSAGENS -->
+  <div class="secao" id="mensagens">
     <div class="card">
-      <div class="card-header"><span class="card-title">Gerador de mensagens WhatsApp</span></div>
-      <div class="card-body">
-        <div class="form-group" style="margin-bottom:.875rem">
-          <label>Paciente</label>
-          <select id="msg-pac" onchange="updateMsg()">
-            <option value="">Selecione um paciente...</option>
-          </select>
-        </div>
-        <div class="msg-types">
-          <button class="msg-type active" onclick="selMsgType(this,'lembrete')">Lembrete</button>
-          <button class="msg-type" onclick="selMsgType(this,'confirmacao')">Confirmar presenca</button>
-          <button class="msg-type" onclick="selMsgType(this,'cobranca')">Cobranca</button>
-          <button class="msg-type" onclick="selMsgType(this,'cancelamento')">Cancelamento</button>
-        </div>
-        <div class="msg-preview" id="msg-preview">Selecione um paciente para gerar a mensagem.</div>
-        <div class="msg-actions">
-          <button class="btn btn-primary" onclick="copyMsg()">
-            <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            Copiar
-          </button>
-          <button class="btn" onclick="openWpp()">
-            <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            Abrir no WhatsApp
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">Politica de atendimento</span></div>
-      <div class="card-body">
-        <div class="politica-box" id="politica-box">Ola! Seja bem-vindo(a) ao meu consultorio.
-
-Antes de iniciarmos, gostaria de alinhar algumas informacoes:
-
-*Agendamento:* As sessoes sao agendadas previamente e confirmadas por aqui.
-
-*Cancelamentos:* Solicito o cancelamento com no minimo 24h de antecedencia. Cancelamentos fora deste prazo serao cobrados integralmente.
-
-*Pagamento:* O pagamento e realizado no dia da sessao (Pix, cartao ou dinheiro).
-
-Qualquer duvida, estou a disposicao. Vamos juntos nessa jornada!</div>
-        <button class="btn btn-primary" onclick="copyPolitica()">
-          <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" fill="none" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          Copiar politica
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- CONFIG -->
-  <div class="section" id="tab-config">
-    <div class="card">
-      <div class="card-header"><span class="card-title">Google Sheets - Sincronizacao</span></div>
-      <div class="card-body">
-        <div class="settings-row">
-          <div class="settings-label">
-            URL do Apps Script
-            <span class="settings-sub">Cole aqui a URL gerada ao publicar o script</span>
-          </div>
-        </div>
-        <div style="margin-bottom:10px">
-          <input class="settings-input" style="width:100%" type="url" id="cfg-url" placeholder="https://script.google.com/macros/s/..." oninput="saveCfg()">
-        </div>
-        <div class="settings-row">
-          <div class="settings-label">
-            Senha do script (opcional)
-            <span class="settings-sub">Se configurou protecao no Apps Script</span>
-          </div>
-          <input class="settings-input" type="password" id="cfg-senha" placeholder="senha" oninput="saveCfg()">
-        </div>
-        <div class="settings-row">
-          <div class="settings-label">
-            Nome da profissional
-            <span class="settings-sub">Usado nas mensagens geradas</span>
-          </div>
-          <input class="settings-input" type="text" id="cfg-nome" placeholder="Ex: Dra. Ana" oninput="saveCfg()">
-        </div>
-        <div class="settings-row">
-          <div class="settings-label">
-            Chave Pix
-            <span class="settings-sub">Inserida automaticamente nas mensagens de cobranca</span>
-          </div>
-          <input class="settings-input" type="text" id="cfg-pix" placeholder="CPF, e-mail ou telefone" oninput="saveCfg()">
-        </div>
-        <div style="margin-top:1rem;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="btn btn-primary" onclick="syncAll()">Testar sincronizacao</button>
-          <button class="btn" onclick="exportCSV()">Exportar backup CSV</button>
-          <button class="btn" style="color:var(--red);border-color:var(--red)" onclick="clearData()">Limpar dados locais</button>
-        </div>
-        <div style="margin-top:1.25rem;padding-top:1rem;border-top:1px solid var(--border)">
-          <div style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:.5rem">Como configurar (passo a passo)</div>
-          <ol style="font-size:12px;color:var(--text3);line-height:1.9;padding-left:1.25rem">
-            <li>Abra o Google Sheets e crie uma planilha nova</li>
-            <li>No menu: Extensoes > Apps Script</li>
-            <li>Apague o codigo existente e cole o codigo do arquivo <strong>fono_apps_script.gs</strong></li>
-            <li>Clique em Implantar > Nova implantacao > Aplicativo da web</li>
-            <li>Em "Quem tem acesso": selecione "Qualquer pessoa"</li>
-            <li>Copie a URL gerada e cole no campo acima</li>
-            <li>Clique em "Testar sincronizacao"</li>
-          </ol>
-        </div>
-      </div>
-    </div>
-  </div>
-
-</div><!-- /container -->
-
-<!-- MODAIS -->
-<div class="modal-overlay" id="modal-paciente">
-  <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-pac-title">Novo paciente</span>
-      <button class="btn-ghost btn" onclick="closeModal('paciente')">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
-    </div>
-    <input type="hidden" id="p-id">
-    <div class="form-row cols2">
-      <div class="form-group"><label>Nome completo *</label><input type="text" id="p-nome" placeholder="Ex: Maria Silva"></div>
-      <div class="form-group"><label>WhatsApp</label><input type="tel" id="p-fone" placeholder="(11) 99999-9999"></div>
-    </div>
-    <div class="form-row cols2">
-      <div class="form-group"><label>Valor por sessao (R$)</label><input type="number" id="p-valor" placeholder="150" min="0" step="0.01"></div>
-      <div class="form-group"><label>Especialidade</label>
-        <select id="p-esp">
-          <option>Linguagem infantil</option><option>Voz</option>
-          <option>Motricidade orofacial</option><option>Degluticao / disfagia</option>
-          <option>Audicao</option><option>Gagueira</option><option>Outro</option>
+      <div class="card-titulo">Gerador de Mensagens WhatsApp</div>
+      
+      <div class="form-grupo">
+        <label>Selecione o Paciente</label>
+        <select id="msg-paciente" onchange="atualizarMsg()">
+          <option value="">-- Selecione --</option>
         </select>
       </div>
+
+      <div style="margin: 1rem 0;">
+        <strong style="color: var(--cor-verde-escuro);">Tipo de Mensagem:</strong>
+        <div style="margin-top: 0.5rem; display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="badge badge-verde" onclick="selecionarTipoMsg(this, 'lembrete')">Lembrete</button>
+          <button class="badge badge-lilас" onclick="selecionarTipoMsg(this, 'confirmacao')">Confirmar</button>
+          <button class="badge badge-lilас" onclick="selecionarTipoMsg(this, 'cobranca')">Cobrança</button>
+          <button class="badge badge-vermelho" onclick="selecionarTipoMsg(this, 'cancelamento')">Cancelamento</button>
+        </div>
+      </div>
+
+      <label style="color: var(--cor-verde-escuro); font-weight: 600;">Prévia da Mensagem:</label>
+      <div class="preview-msg" id="preview-msg">Selecione um paciente para gerar a mensagem.</div>
+
+      <button class="btn" onclick="copiarMsg()">📋 Copiar Mensagem</button>
+      <button class="btn btn-secundario" onclick="abrirWhatsApp()" style="margin-left: 10px;">💬 Enviar no WhatsApp</button>
     </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeModal('paciente')">Cancelar</button>
-      <button class="btn btn-primary" onclick="savePaciente()">Salvar</button>
+  </div>
+
+  <!-- ABA CONFIG -->
+  <div class="secao" id="config">
+    <div class="card">
+      <div class="card-titulo">Configurações</div>
+      
+      <div class="form-grupo">
+        <label>URL do Apps Script</label>
+        <input type="url" id="cfg-url" placeholder="https://script.google.com/macros/s/..." oninput="salvarConfig()">
+      </div>
+
+      <button class="btn" onclick="testarSync()">🔄 Testar Sincronização</button>
+      <button class="btn btn-secundario" onclick="limparDados()" style="margin-left: 10px;">🗑️ Limpar Dados</button>
+
+      <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--cor-lilас);">
+        <strong style="color: var(--cor-verde-escuro);">Passo a Passo (Apps Script):</strong>
+        <ol style="margin-top: 0.5rem; color: var(--cor-texto-cinza); font-size: 12px; line-height: 1.8;">
+          <li>Abra Google Sheets e crie uma planilha nova</li>
+          <li>Menu: Extensões > Apps Script</li>
+          <li>Cole o código do arquivo fono_apps_script_com_formatacao.gs</li>
+          <li>Implantar > Nova implantação > Aplicativo da web</li>
+          <li>"Quem tem acesso": selecione "Qualquer pessoa"</li>
+          <li>Copie a URL e cole no campo acima</li>
+          <li>Clique em "Testar Sincronização"</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- MODAL PACIENTE -->
+<div class="modal-fundo" id="modal-paciente">
+  <div class="modal">
+    <div class="modal-titulo">Novo Paciente</div>
+    <div class="form-grupo">
+      <label>Nome Completo *</label>
+      <input type="text" id="p-nome" placeholder="Ex: Maria Silva">
+    </div>
+    <div class="form-linha">
+      <div class="form-grupo">
+        <label>WhatsApp</label>
+        <input type="tel" id="p-fone" placeholder="(11) 99999-9999">
+      </div>
+      <div class="form-grupo">
+        <label>Valor por Sessão (R$)</label>
+        <input type="number" id="p-valor" placeholder="150" step="0.01">
+      </div>
+    </div>
+    <div class="form-grupo">
+      <label>Especialidade</label>
+      <select id="p-esp">
+        <option>Linguagem infantil</option>
+        <option>Voz</option>
+        <option>Motricidade orofacial</option>
+        <option>Deglutição</option>
+        <option>Audição</option>
+        <option>Gagueira</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="modal-rodape">
+      <button class="btn btn-secundario" onclick="fecharModal('paciente')">Cancelar</button>
+      <button class="btn" onclick="salvarPaciente()">Salvar</button>
     </div>
   </div>
 </div>
 
-<div class="modal-overlay" id="modal-sessao">
+<!-- MODAL SESSAO -->
+<div class="modal-fundo" id="modal-sessao">
   <div class="modal">
-    <div class="modal-header">
-      <span class="modal-title" id="modal-ses-title">Nova sessao</span>
-      <button class="btn-ghost btn" onclick="closeModal('sessao')">
-        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-      </button>
+    <div class="modal-titulo">Nova Sessão</div>
+    <div class="form-linha">
+      <div class="form-grupo">
+        <label>Paciente *</label>
+        <select id="s-paciente"></select>
+      </div>
+      <div class="form-grupo">
+        <label>Data *</label>
+        <input type="date" id="s-data">
+      </div>
     </div>
-    <input type="hidden" id="s-id">
-    <div class="form-row cols2">
-      <div class="form-group"><label>Paciente *</label><select id="s-pac"></select></div>
-      <div class="form-group"><label>Data *</label><input type="date" id="s-data"></div>
+    <div class="form-linha">
+      <div class="form-grupo">
+        <label>Hora</label>
+        <input type="time" id="s-hora">
+      </div>
+      <div class="form-grupo">
+        <label>Valor (R$)</label>
+        <input type="number" id="s-valor" step="0.01">
+      </div>
     </div>
-    <div class="form-row cols3">
-      <div class="form-group"><label>Horario</label><input type="time" id="s-hora"></div>
-      <div class="form-group"><label>Status</label>
+    <div class="form-linha">
+      <div class="form-grupo">
+        <label>Status</label>
         <select id="s-status">
           <option value="confirmada">Confirmada</option>
-          <option value="aguardando">Aguardando confirmacao</option>
+          <option value="aguardando">Aguardando</option>
           <option value="cancelada">Cancelada</option>
         </select>
       </div>
-      <div class="form-group"><label>Pagamento</label>
+      <div class="form-grupo">
+        <label>Pagamento</label>
         <select id="s-pag">
           <option value="pendente">Pendente</option>
           <option value="pago">Pago</option>
@@ -422,488 +584,272 @@ Qualquer duvida, estou a disposicao. Vamos juntos nessa jornada!</div>
         </select>
       </div>
     </div>
-    <div class="form-row cols2">
-      <div class="form-group"><label>Valor (R$)</label><input type="number" id="s-valor" placeholder="150" min="0" step="0.01"></div>
-      <div class="form-group"><label>Observacao</label><input type="text" id="s-obs" placeholder="Opcional"></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" onclick="closeModal('sessao')">Cancelar</button>
-      <button class="btn btn-primary" onclick="saveSessao()">Salvar</button>
+    <div class="modal-rodape">
+      <button class="btn btn-secundario" onclick="fecharModal('sessao')">Cancelar</button>
+      <button class="btn" onclick="salvarSessao()">Salvar</button>
     </div>
   </div>
 </div>
 
-<div class="toast-wrap" id="toasts"></div>
-
 <script>
-// ── ESTADO ──────────────────────────────────────────────────
 let pacientes = JSON.parse(localStorage.getItem('fg_pac') || '[]');
-let sessoes   = JSON.parse(localStorage.getItem('fg_ses') || '[]');
-let cfg = JSON.parse(localStorage.getItem('fg_cfg') || '{"url":"","senha":"","nome":"","pix":""}');
-let currentMsgType = 'lembrete';
-let editingPacId = null;
-let editingSesId = null;
+let sessoes = JSON.parse(localStorage.getItem('fg_ses') || '[]');
+let cfg = JSON.parse(localStorage.getItem('fg_cfg') || '{"url":""}');
+let tipoMsgAtual = 'lembrete';
 
-// ── PERSISTENCIA ─────────────────────────────────────────────
-function save(){
+function salvarDados() {
   localStorage.setItem('fg_pac', JSON.stringify(pacientes));
   localStorage.setItem('fg_ses', JSON.stringify(sessoes));
 }
-function saveCfg(){
-  cfg.url   = document.getElementById('cfg-url').value.trim();
-  cfg.senha = document.getElementById('cfg-senha').value;
-  cfg.nome  = document.getElementById('cfg-nome').value.trim();
-  cfg.pix   = document.getElementById('cfg-pix').value.trim();
+
+function salvarConfig() {
+  cfg.url = document.getElementById('cfg-url').value.trim();
   localStorage.setItem('fg_cfg', JSON.stringify(cfg));
-  document.getElementById('sync-warn').style.display = cfg.url ? 'none' : 'flex';
+  document.getElementById('aviso').style.display = cfg.url ? 'none' : 'block';
 }
 
-// ── INIT ─────────────────────────────────────────────────────
-function init(){
-  document.getElementById('cfg-url').value   = cfg.url;
-  document.getElementById('cfg-senha').value = cfg.senha;
-  document.getElementById('cfg-nome').value  = cfg.nome;
-  document.getElementById('cfg-pix').value   = cfg.pix;
-  document.getElementById('sync-warn').style.display = cfg.url ? 'none' : 'flex';
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('s-data').value = today;
-  render();
+function trocarAba(nome) {
+  document.querySelectorAll('.secao').forEach(s => s.classList.remove('ativa'));
+  document.querySelectorAll('.aba').forEach(a => a.classList.remove('ativo'));
+  document.getElementById(nome).classList.add('ativa');
+  event.target.classList.add('ativo');
+  renderizar();
 }
 
-// ── TABS ─────────────────────────────────────────────────────
-function showTab(id, btn){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
-  document.getElementById('tab-'+id).classList.add('active');
-  btn.classList.add('active');
-  render();
-}
-
-// ── MODAIS ───────────────────────────────────────────────────
-function openModal(tipo, data){
-  if(tipo==='paciente'){
-    editingPacId = data?.id || null;
-    document.getElementById('modal-pac-title').textContent = data ? 'Editar paciente' : 'Novo paciente';
-    document.getElementById('p-id').value    = data?.id || '';
-    document.getElementById('p-nome').value  = data?.nome || '';
-    document.getElementById('p-fone').value  = data?.fone || '';
-    document.getElementById('p-valor').value = data?.valor || '';
-    document.getElementById('p-esp').value   = data?.esp || 'Linguagem infantil';
-    document.getElementById('modal-paciente').classList.add('open');
-    setTimeout(()=>document.getElementById('p-nome').focus(),50);
-  }
-  if(tipo==='sessao'){
-    editingSesId = data?.id || null;
-    document.getElementById('modal-ses-title').textContent = data ? 'Editar sessao' : 'Nova sessao';
-    const sel = document.getElementById('s-pac');
-    sel.innerHTML = pacientes.map(p=>`<option value="${p.id}" ${data?.pacId==p.id?'selected':''}>${p.nome}</option>`).join('');
-    if(!pacientes.length){ toast('Cadastre um paciente primeiro','err'); return; }
-    document.getElementById('s-id').value     = data?.id || '';
-    document.getElementById('s-data').value   = data?.data || new Date().toISOString().split('T')[0];
-    document.getElementById('s-hora').value   = data?.hora || '';
-    document.getElementById('s-status').value = data?.status || 'confirmada';
-    document.getElementById('s-pag').value    = data?.pag || 'pendente';
-    document.getElementById('s-obs').value    = data?.obs || '';
-    if(data){
-      document.getElementById('s-valor').value = data.valor;
-    } else {
-      const p = pacientes[0];
-      document.getElementById('s-valor').value = p?.valor || '';
-      sel.onchange = ()=>{
-        const pp = pacientes.find(x=>x.id==sel.value);
-        if(pp) document.getElementById('s-valor').value = pp.valor;
-      };
-    }
-    document.getElementById('modal-sessao').classList.add('open');
+function abrirModal(tipo) {
+  if (tipo === 'paciente') {
+    document.getElementById('p-nome').value = '';
+    document.getElementById('p-fone').value = '';
+    document.getElementById('p-valor').value = '';
+    document.getElementById('modal-paciente').classList.add('aberto');
+    document.getElementById('p-nome').focus();
+  } else if (tipo === 'sessao') {
+    const sel = document.getElementById('s-paciente');
+    sel.innerHTML = pacientes.length ? pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('') : '<option>Sem pacientes</option>';
+    document.getElementById('s-data').value = new Date().toISOString().split('T')[0];
+    if (pacientes.length) document.getElementById('s-valor').value = pacientes[0].valor || '';
+    document.getElementById('modal-sessao').classList.add('aberto');
   }
 }
-function closeModal(tipo){
-  document.getElementById('modal-'+tipo).classList.remove('open');
+
+function fecharModal(tipo) {
+  document.getElementById('modal-' + tipo).classList.remove('aberto');
 }
 
-// ── CRUD PACIENTES ───────────────────────────────────────────
-function savePaciente(){
+function salvarPaciente() {
   const nome = document.getElementById('p-nome').value.trim();
-  if(!nome){ toast('Informe o nome do paciente','err'); return; }
-  const data = {
-    id: editingPacId || Date.now(),
+  if (!nome) { alert('Informe o nome'); return; }
+  pacientes.push({
+    id: Date.now(),
     nome,
     fone: document.getElementById('p-fone').value.trim(),
-    valor: parseFloat(document.getElementById('p-valor').value)||0,
-    esp: document.getElementById('p-esp').value,
-    ts: Date.now()
-  };
-  if(editingPacId){
-    const i = pacientes.findIndex(p=>p.id===editingPacId);
-    if(i>=0) pacientes[i]=data;
-  } else {
-    pacientes.push(data);
-  }
-  save(); closeModal('paciente'); render();
-  toast(editingPacId ? 'Paciente atualizado' : 'Paciente cadastrado');
-  if(cfg.url) syncAll();
-}
-function deletePaciente(id){
-  if(!confirm('Remover este paciente e todas as suas sessoes?')) return;
-  pacientes = pacientes.filter(p=>p.id!==id);
-  sessoes   = sessoes.filter(s=>s.pacId!==id);
-  save(); render(); toast('Paciente removido');
-  if(cfg.url) syncAll();
+    valor: parseFloat(document.getElementById('p-valor').value) || 0,
+    esp: document.getElementById('p-esp').value
+  });
+  salvarDados();
+  fecharModal('paciente');
+  renderizar();
 }
 
-// ── CRUD SESSOES ─────────────────────────────────────────────
-function saveSessao(){
-  const pacId = parseInt(document.getElementById('s-pac').value);
-  const pac   = pacientes.find(p=>p.id===pacId);
-  if(!pac){ toast('Selecione um paciente','err'); return; }
-  const data2 = document.getElementById('s-data').value;
-  if(!data2){ toast('Informe a data','err'); return; }
-  const data = {
-    id: editingSesId || Date.now(),
-    pacId, pacNome: pac.nome,
-    data: data2,
+function salvarSessao() {
+  const pacId = parseInt(document.getElementById('s-paciente').value);
+  const p = pacientes.find(x => x.id === pacId);
+  if (!p) { alert('Selecione paciente'); return; }
+  const data = document.getElementById('s-data').value;
+  if (!data) { alert('Informe data'); return; }
+  sessoes.push({
+    id: Date.now(),
+    pacId,
+    pacNome: p.nome,
+    data,
     hora: document.getElementById('s-hora').value,
     status: document.getElementById('s-status').value,
     pag: document.getElementById('s-pag').value,
-    valor: parseFloat(document.getElementById('s-valor').value)||pac.valor||0,
-    obs: document.getElementById('s-obs').value.trim(),
-    ts: Date.now()
-  };
-  if(editingSesId){
-    const i = sessoes.findIndex(s=>s.id===editingSesId);
-    if(i>=0) sessoes[i]=data;
-  } else {
-    sessoes.push(data);
-  }
-  save(); closeModal('sessao'); render();
-  toast(editingSesId ? 'Sessao atualizada' : 'Sessao registrada');
-  if(cfg.url) syncAll();
-}
-function deleteSessao(id){
-  if(!confirm('Remover esta sessao?')) return;
-  sessoes = sessoes.filter(s=>s.id!==id);
-  save(); render(); toast('Sessao removida');
-  if(cfg.url) syncAll();
-}
-function togglePag(id){
-  const s = sessoes.find(x=>x.id===id);
-  if(!s) return;
-  const cycle = {pago:'pendente', pendente:'atrasado', atrasado:'pago'};
-  s.pag = cycle[s.pag]||'pago';
-  s.ts = Date.now();
-  save(); render();
-  if(cfg.url) syncAll();
+    valor: parseFloat(document.getElementById('s-valor').value) || p.valor || 0
+  });
+  salvarDados();
+  fecharModal('sessao');
+  renderizar();
 }
 
-// ── RENDER ───────────────────────────────────────────────────
-function render(){
-  renderMetrics(); renderAgenda(); renderPacientes(); renderFinanceiro(); populateMsgSelect();
+function deletarPaciente(id) {
+  if (!confirm('Remover?')) return;
+  pacientes = pacientes.filter(p => p.id !== id);
+  sessoes = sessoes.filter(s => s.pacId !== id);
+  salvarDados();
+  renderizar();
 }
 
-function initials(n){ return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
-
-function fmtData(d){
-  if(!d) return '-';
-  const dt = new Date(d+'T12:00');
-  return dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+function deletarSessao(id) {
+  if (!confirm('Remover?')) return;
+  sessoes = sessoes.filter(s => s.id !== id);
+  salvarDados();
+  renderizar();
 }
 
-function renderMetrics(){
+function renderizar() {
+  renderMetricas();
+  renderAgenda();
+  renderPacientes();
+  renderFinanceiro();
+  populateMsgSelect();
+}
+
+function renderMetricas() {
   const today = new Date().toISOString().split('T')[0];
   const dow = new Date().getDay();
-  const startW = new Date(); startW.setDate(startW.getDate()-dow);
+  const startW = new Date();
+  startW.setDate(startW.getDate() - dow);
   const sw = startW.toISOString().split('T')[0];
-  document.getElementById('m-hoje').textContent    = sessoes.filter(s=>s.data===today).length;
-  document.getElementById('m-semana').textContent  = sessoes.filter(s=>s.data>=sw).length;
-  document.getElementById('m-conf').textContent    = sessoes.filter(s=>s.status==='confirmada').length;
-  document.getElementById('m-cancel').textContent  = sessoes.filter(s=>s.status==='cancelada').length;
+  document.getElementById('m-hoje').textContent = sessoes.filter(s => s.data === today).length;
+  document.getElementById('m-semana').textContent = sessoes.filter(s => s.data >= sw).length;
+  document.getElementById('m-conf').textContent = sessoes.filter(s => s.status === 'confirmada').length;
+  document.getElementById('m-cancel').textContent = sessoes.filter(s => s.status === 'cancelada').length;
 }
 
-function renderAgenda(){
-  const el = document.getElementById('agenda-list');
-  if(!sessoes.length){ el.innerHTML='<div class="empty">Nenhuma sessao. Adicione a primeira!</div>'; return; }
-  const sorted = [...sessoes].sort((a,b)=>a.data.localeCompare(b.data)||a.hora.localeCompare(b.hora));
-  el.innerHTML = sorted.map(s=>{
-    const sb = badgeSt(s.status);
-    const pb = badgePag(s.pag);
-    return `<div class="sessao-item">
-      <div class="sessao-data">${fmtData(s.data)}<br>${s.hora||''}</div>
+function renderAgenda() {
+  const el = document.getElementById('lista-agenda');
+  if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão agendada</p>'; return; }
+  const sorted = [...sessoes].sort((a, b) => a.data.localeCompare(b.data));
+  el.innerHTML = sorted.map(s => `
+    <div class="lista-item">
       <div>
-        <div class="item-name">${s.pacNome}</div>
-        <button class="badge ${sb.cls}" style="cursor:default;margin-top:2px">${sb.label}</button>
+        <div class="lista-item-nome">${s.pacNome}</div>
+        <div class="lista-item-info">${s.data} ${s.hora} • R$ ${s.valor.toFixed(2)}</div>
+        <div style="margin-top: 5px;">
+          <span class="badge ${s.status === 'confirmada' ? 'badge-verde' : 'badge-vermelho'}">${s.status}</span>
+          <span class="badge ${s.pag === 'pago' ? 'badge-verde' : 'badge-lilас'}" style="margin-left: 5px;">${s.pag}</span>
+        </div>
       </div>
-      <div style="text-align:right">
-        <div style="font-size:13px;font-weight:500">R$ ${s.valor.toFixed(2)}</div>
-        <button class="badge ${pb.cls}" onclick="togglePag(${s.id})" style="margin-top:2px">${pb.label}</button>
+      <button class="btn btn-pequeno" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333;">✕</button>
+    </div>
+  `).join('');
+}
+
+function renderPacientes() {
+  const el = document.getElementById('lista-pacientes');
+  if (!pacientes.length) { el.innerHTML = '<p style="color: #999;">Nenhum paciente cadastrado</p>'; return; }
+  el.innerHTML = pacientes.map(p => {
+    const pend = sessoes.filter(s => s.pacId === p.id && s.pag !== 'pago').length;
+    return `
+      <div class="lista-item">
+        <div>
+          <div class="lista-item-nome">${p.nome}</div>
+          <div class="lista-item-info">${p.esp} • R$ ${p.valor}/sessão ${pend ? '• ' + pend + ' pendente(s)' : '• em dia'}</div>
+        </div>
+        <button class="btn btn-pequeno" onclick="deletarPaciente(${p.id})" style="background: #ccc; color: #333;">✕</button>
       </div>
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" onclick='openModal("sessao",${JSON.stringify(s)})' title="Editar">
-          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="deleteSessao(${s.id})" title="Remover">
-          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </div>
-    </div>`;
+    `;
   }).join('');
 }
 
-function renderPacientes(){
-  const el = document.getElementById('pacientes-list');
-  if(!pacientes.length){ el.innerHTML='<div class="empty">Nenhum paciente cadastrado.</div>'; return; }
-  el.innerHTML = pacientes.map(p=>{
-    const pend = sessoes.filter(s=>s.pacId===p.id&&s.pag!=='pago').length;
-    return `<div class="item">
-      <div class="item-avatar">${initials(p.nome)}</div>
-      <div class="item-info">
-        <div class="item-name">${p.nome}</div>
-        <div class="item-meta">${p.esp} &middot; R$ ${p.valor.toFixed(2)}/sessao${p.fone?' &middot; '+p.fone:''}</div>
+function renderFinanceiro() {
+  const rec = sessoes.filter(s => s.pag === 'pago').reduce((a, s) => a + s.valor, 0);
+  const pend = sessoes.filter(s => s.pag === 'pendente').reduce((a, s) => a + s.valor, 0);
+  const atras = sessoes.filter(s => s.pag === 'atrasado').reduce((a, s) => a + s.valor, 0);
+  document.getElementById('f-rec').textContent = 'R$ ' + rec.toFixed(2);
+  document.getElementById('f-pend').textContent = 'R$ ' + pend.toFixed(2);
+  document.getElementById('f-atras').textContent = 'R$ ' + atras.toFixed(2);
+  
+  const el = document.getElementById('lista-financeiro');
+  if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão registrada</p>'; return; }
+  el.innerHTML = sessoes.map(s => `
+    <div class="lista-item">
+      <div>
+        <div class="lista-item-nome">${s.pacNome}</div>
+        <div class="lista-item-info">${s.data} • R$ ${s.valor.toFixed(2)}</div>
       </div>
-      ${pend?`<span class="badge badge-pendente">${pend} pendente${pend>1?'s':''}</span>`:'<span class="badge badge-pago">em dia</span>'}
-      <div class="item-actions">
-        <button class="btn btn-ghost btn-sm" onclick='openModal("paciente",${JSON.stringify(p)})' title="Editar">
-          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-        </button>
-        <button class="btn btn-ghost btn-sm" onclick="deletePaciente(${p.id})" title="Remover">
-          <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" fill="none" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-        </button>
-      </div>
-    </div>`;
-  }).join('');
+      <span class="badge ${s.pag === 'pago' ? 'badge-verde' : s.pag === 'atrasado' ? 'badge-vermelho' : 'badge-lilас'}">${s.pag}</span>
+    </div>
+  `).join('');
 }
 
-function renderFinanceiro(){
-  const rec   = sessoes.filter(s=>s.pag==='pago').reduce((a,s)=>a+s.valor,0);
-  const pend  = sessoes.filter(s=>s.pag==='pendente').reduce((a,s)=>a+s.valor,0);
-  const atras = sessoes.filter(s=>s.pag==='atrasado').reduce((a,s)=>a+s.valor,0);
-  document.getElementById('f-rec').textContent   = 'R$ '+rec.toFixed(2);
-  document.getElementById('f-pend').textContent  = 'R$ '+pend.toFixed(2);
-  document.getElementById('f-atras').textContent = 'R$ '+atras.toFixed(2);
-  const el = document.getElementById('financeiro-list');
-  if(!sessoes.length){ el.innerHTML='<div class="empty">Nenhuma sessao registrada.</div>'; return; }
-  const sorted = [...sessoes].sort((a,b)=>b.data.localeCompare(a.data));
-  el.innerHTML = sorted.map(s=>{
-    const pb = badgePag(s.pag);
-    return `<div class="sessao-item">
-      <div class="sessao-data">${fmtData(s.data)}</div>
-      <div class="item-name">${s.pacNome}</div>
-      <div style="font-size:13px;font-weight:500">R$ ${s.valor.toFixed(2)}</div>
-      <button class="badge ${pb.cls}" onclick="togglePag(${s.id})">${pb.label}</button>
-    </div>`;
-  }).join('');
+function populateMsgSelect() {
+  const sel = document.getElementById('msg-paciente');
+  sel.innerHTML = '<option value="">-- Selecione --</option>' + pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+  atualizarMsg();
 }
 
-function badgeSt(s){
-  const m={confirmada:{cls:'badge-confirmada',label:'Confirmada'},aguardando:{cls:'badge-aguardando',label:'Aguardando'},cancelada:{cls:'badge-cancelada',label:'Cancelada'}};
-  return m[s]||{cls:'badge-pendente',label:s};
-}
-function badgePag(p){
-  const m={pago:{cls:'badge-pago',label:'Pago'},pendente:{cls:'badge-pendente',label:'Pendente'},atrasado:{cls:'badge-atrasado',label:'Atrasado'}};
-  return m[p]||{cls:'badge-pendente',label:p};
+function selecionarTipoMsg(btn, tipo) {
+  document.querySelectorAll('.badge').forEach(b => b.style.opacity = '0.5');
+  btn.style.opacity = '1';
+  tipoMsgAtual = tipo;
+  atualizarMsg();
 }
 
-// ── MENSAGENS ────────────────────────────────────────────────
-function populateMsgSelect(){
-  const sel = document.getElementById('msg-pac');
-  const val = sel.value;
-  sel.innerHTML = '<option value="">Selecione um paciente...</option>' +
-    pacientes.map(p=>`<option value="${p.id}">${p.nome}</option>`).join('');
-  if(val) sel.value = val;
-  updateMsg();
-}
-function selMsgType(btn, tipo){
-  document.querySelectorAll('.msg-type').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  currentMsgType = tipo;
-  updateMsg();
-}
-function updateMsg(){
-  const pid = parseInt(document.getElementById('msg-pac').value);
-  const p   = pacientes.find(x=>x.id===pid);
-  const el  = document.getElementById('msg-preview');
-  if(!p){ el.textContent='Selecione um paciente para gerar a mensagem.'; return; }
-
-  const prox = sessoes
-    .filter(s=>s.pacId===pid && s.data>=new Date().toISOString().split('T')[0])
-    .sort((a,b)=>a.data.localeCompare(b.data))[0];
-
+function atualizarMsg() {
+  const pid = parseInt(document.getElementById('msg-paciente').value);
+  const p = pacientes.find(x => x.id === pid);
+  const el = document.getElementById('preview-msg');
+  if (!p) { el.textContent = 'Selecione um paciente para gerar a mensagem.'; return; }
+  const prox = sessoes.filter(s => s.pacId === pid && s.data >= new Date().toISOString().split('T')[0]).sort((a,b) => a.data.localeCompare(b.data))[0];
   const nome = p.nome.split(' ')[0];
-  const dataFmt = prox
-    ? new Date(prox.data+'T12:00').toLocaleDateString('pt-BR',{weekday:'long',day:'2-digit',month:'long'})
-    : 'a definir';
-  const hora = prox?.hora ? ' as '+prox.hora : '';
-  const dr   = cfg.nome ? cfg.nome : 'a fonoaudiologa';
-  const pix  = cfg.pix  ? '\n\nChave Pix: '+cfg.pix : '';
-
-  // Mensagens sem emojis problematicos - usando apenas texto simples e *negrito* do WhatsApp
+  const dataFmt = prox ? new Date(prox.data + 'T12:00').toLocaleDateString('pt-BR', {weekday:'long',day:'2-digit',month:'long'}) : 'a definir';
+  const hora = prox?.hora ? ' às ' + prox.hora : '';
   const msgs = {
-    lembrete:
-`Ola, ${nome}!
-
-Passando para lembrar da sua sessao de fonoaudiologia:
-
-*Data:* ${dataFmt}${hora}
-
-Qualquer duvida, e so me chamar. Ate la!
-
--- ${dr}`,
-
-    confirmacao:
-`Ola, ${nome}! Tudo bem?
-
-Pode confirmar presenca para sua sessao de fonoaudiologia?
-
-*Data:* ${dataFmt}${hora}
-
-Responda com *SIM* para confirmar ou me avise se precisar remarcar. Obrigada!
-
--- ${dr}`,
-
-    cobranca:
-`Ola, ${nome}! Tudo bem?
-
-Gostaria de verificar o pagamento referente a sua(s) sessao(oes) em aberto, no valor de *R$ ${p.valor.toFixed(2)}*.
-
-Quando puder, pode me enviar o comprovante por aqui. Obrigada!${pix}
-
--- ${dr}`,
-
-    cancelamento:
-`Ola, ${nome}!
-
-Vi que precisou cancelar a sessao. Espero que esteja tudo bem!
-
-Lembrando que cancelamentos com menos de 24h de antecedencia sao cobrados integralmente, conforme combinado no inicio do acompanhamento.
-
-Quando quiser reagendar, e so me chamar!
-
--- ${dr}`
+    lembrete: `Olá, ${nome}!\n\nPassando para lembrar da sua sessão de fonoaudiologia:\n\nData: ${dataFmt}${hora}\n\nQualquer dúvida, é só me chamar. Até lá!`,
+    confirmacao: `Olá, ${nome}! Tudo bem?\n\nPode confirmar presença para sua sessão?\n\nData: ${dataFmt}${hora}\n\nResponda com SIM para confirmar.`,
+    cobranca: `Olá, ${nome}!\n\nGostaria de verificar o pagamento da sua(s) sessão(ões) em aberto (R$ ${p.valor.toFixed(2)}).\n\nQuando puder, envie o comprovante. Obrigada!`,
+    cancelamento: `Olá, ${nome}!\n\nVi que precisou cancelar a sessão. Tudo bem?\n\nLembrando que cancelamentos com menos de 24h são cobrados integralmente.`
   };
-
-  el.textContent = msgs[currentMsgType]||'';
+  el.textContent = msgs[tipoMsgAtual] || '';
 }
 
-function copyMsg(){
-  const text = document.getElementById('msg-preview').textContent;
-  navigator.clipboard.writeText(text).then(()=>toast('Mensagem copiada!')).catch(()=>{
-    // fallback
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta); toast('Mensagem copiada!');
-  });
+function copiarMsg() {
+  const text = document.getElementById('preview-msg').textContent;
+  navigator.clipboard.writeText(text).then(() => alert('Copiado!')).catch(() => alert('Erro ao copiar'));
 }
 
-function openWpp(){
-  const pid = parseInt(document.getElementById('msg-pac').value);
-  const p   = pacientes.find(x=>x.id===pid);
-  const text= document.getElementById('msg-preview').textContent;
-  const fone= p?.fone?.replace(/\D/g,'')||'';
-  const url = fone
-    ? `https://wa.me/55${fone}?text=${encodeURIComponent(text)}`
-    : `https://wa.me/?text=${encodeURIComponent(text)}`;
-  window.open(url,'_blank');
+function abrirWhatsApp() {
+  const pid = parseInt(document.getElementById('msg-paciente').value);
+  const p = pacientes.find(x => x.id === pid);
+  if (!p) { alert('Selecione um paciente'); return; }
+  const text = document.getElementById('preview-msg').textContent;
+  const fone = p.fone?.replace(/\D/g, '') || '';
+  const url = fone ? `https://wa.me/55${fone}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
 }
 
-function copyPolitica(){
-  const text = document.getElementById('politica-box').textContent;
-  navigator.clipboard.writeText(text).then(()=>toast('Politica copiada!')).catch(()=>{
-    const ta = document.createElement('textarea');
-    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy');
-    document.body.removeChild(ta); toast('Politica copiada!');
-  });
-}
-
-// ── SINCRONISMO GOOGLE SHEETS ────────────────────────────────
-async function syncAll(){
-  if(!cfg.url){ toast('Configure a URL do Apps Script primeiro','err'); return; }
-  setSyncStatus('syncing');
-  try {
-    const payload = {
-      action: 'sync',
-      senha: cfg.senha,
-      pacientes,
-      sessoes
-    };
-    const res = await fetch(cfg.url, {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    });
-    const json = await res.json();
-    if(json.status==='ok'){
-      // Merge: dados do Sheets prevalecem se mais recentes
-      if(json.pacientes && json.pacientes.length) {
-        const merged = mergeRecords(pacientes, json.pacientes);
-        pacientes = merged;
-      }
-      if(json.sessoes && json.sessoes.length) {
-        const merged = mergeRecords(sessoes, json.sessoes);
-        sessoes = merged;
-      }
-      save(); render();
-      setSyncStatus('ok');
-      toast('Sincronizado com o Sheets!');
-    } else {
-      throw new Error(json.msg || 'Erro desconhecido');
-    }
-  } catch(e){
-    setSyncStatus('err');
-    toast('Erro ao sincronizar: ' + e.message, 'err');
-  }
-}
-
-function mergeRecords(local, remote){
-  const map = {};
-  [...local, ...remote].forEach(r => {
-    if(!map[r.id] || (r.ts||0) > (map[r.id].ts||0)) map[r.id] = r;
-  });
-  return Object.values(map);
-}
-
-function setSyncStatus(status){
-  const dot = document.getElementById('sync-dot');
-  const btn = document.getElementById('sync-btn');
-  dot.className = 'sync-dot ' + status;
-  btn.classList.toggle('syncing', status==='syncing');
-}
-
-// ── EXPORT CSV ───────────────────────────────────────────────
-function exportCSV(){
-  if(!sessoes.length){ toast('Nenhuma sessao para exportar','err'); return; }
-  const h = ['Paciente','Data','Hora','Status','Pagamento','Valor','Observacao'];
-  const rows = sessoes.map(s=>[s.pacNome,s.data,s.hora,s.status,s.pag,s.valor.toFixed(2),s.obs||'']);
-  const csv = [h,...rows].map(r=>r.map(c=>'"'+String(c).replace(/"/g,'""')+'"').join(';')).join('\n');
-  const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8;'});
+function exportarCSV() {
+  if (!sessoes.length) { alert('Sem sessões'); return; }
+  const h = ['Paciente', 'Data', 'Hora', 'Status', 'Pagamento', 'Valor'];
+  const rows = sessoes.map(s => [s.pacNome, s.data, s.hora, s.status, s.pag, s.valor.toFixed(2)]);
+  const csv = [h, ...rows].map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\n');
+  const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'sessoes_fono_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.download = 'sessoes.csv';
   a.click();
-  toast('CSV exportado!');
 }
 
-// ── CLEAR ────────────────────────────────────────────────────
-function clearData(){
-  if(!confirm('Isso vai apagar TODOS os dados locais. Tem certeza?')) return;
-  pacientes=[]; sessoes=[]; save(); render(); toast('Dados locais apagados');
+async function testarSync() {
+  if (!cfg.url) { alert('Configure URL primeiro'); return; }
+  try {
+    const res = await fetch(cfg.url, {method: 'POST', body: JSON.stringify({action: 'sync', pacientes, sessoes})});
+    const json = await res.json();
+    if (json.status === 'ok') { alert('Sincronizado!'); } else { alert('Erro: ' + json.msg); }
+  } catch(e) { alert('Erro: ' + e.message); }
 }
 
-// ── TOAST ────────────────────────────────────────────────────
-function toast(msg, tipo=''){
-  const wrap = document.getElementById('toasts');
-  const el = document.createElement('div');
-  el.className = 'toast'+(tipo?' '+tipo:'');
-  el.textContent = msg;
-  wrap.appendChild(el);
-  setTimeout(()=>el.remove(), 2800);
+function limparDados() {
+  if (!confirm('Apagar TODOS os dados?')) return;
+  pacientes = [];
+  sessoes = [];
+  salvarDados();
+  renderizar();
+  alert('Dados apagados');
 }
 
-// Fechar modal clicando fora
-document.querySelectorAll('.modal-overlay').forEach(overlay=>{
-  overlay.addEventListener('click',e=>{ if(e.target===overlay) overlay.classList.remove('open'); });
+document.querySelectorAll('.modal-fundo').forEach(m => {
+  m.addEventListener('click', (e) => {
+    if (e.target === m) m.classList.remove('aberto');
+  });
 });
 
-init();
+document.getElementById('cfg-url').value = cfg.url;
+document.getElementById('aviso').style.display = cfg.url ? 'none' : 'block';
+renderizar();
 </script>
+
 </body>
 </html>
