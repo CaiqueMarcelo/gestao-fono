@@ -3,23 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestão Fono - Verde Escuro, Nude e Lilás</title>
+<title>GiFono v2.0</title>
 <style>
-/* CORES PRINCIPAIS */
 :root {
-  --cor-verde-escuro: #556B4D;
-  --cor-verde-escuro-dark: #3D5436;
-  --cor-verde-claro: #D9E8D1;
+  --cor-verde: #556B4D;
+  --cor-verde-d: #3D5436;
+  --cor-verde-c: #D9E8D1;
   --cor-nude: #F5E6D3;
-  --cor-nude-claro: #FAF4ED;
   --cor-lilas: #E8D4F0;
-  --cor-lilas-escuro: #D4AADB;
-  --cor-branco: #FFFFFF;
   --cor-texto: #1a1a18;
-  --cor-texto-cinza: #5f5e5a;
-  --cor-border: #E0E0E0;
-  --cor-vermelho: #A32D2D;
-  --cor-verde: #639922;
+  --cor-texto-s: #5f5e5a;
+  --cor-borda: #E0E0E0;
+  --bg-body: #EFE9E4;
+  --bg-card: #FFFFFF;
+  --text-primary: #1a1a18;
+  --text-secondary: #5f5e5a;
+}
+
+body.dark-mode {
+  --bg-body: #1a1a18;
+  --bg-card: #2D2D2D;
+  --text-primary: #F5F5F5;
+  --text-secondary: #B0B0B0;
+  --cor-borda: #404040;
+}
+
+/* Barra de referência de cores no topo */
+.color-reference-bar {
+  height: 8px;
+  background: linear-gradient(90deg, #556B4D 0%, #4A6B47 50%, #3D5436 100%);
+  position: sticky;
+  top: 0;
+  z-index: 101;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.color-reference-bar:hover {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: white;
+  font-weight: 600;
+}
+
+.color-reference-bar:hover::after {
+  content: "Verde Musgo Atual: #556B4D (será substituído)";
 }
 
 * {
@@ -30,62 +61,131 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background-color: #f5f3f0;
-  color: var(--cor-texto);
+  background: var(--bg-body);
+  color: var(--text-primary);
+  transition: background 0.3s, color 0.3s;
 }
 
-/* HEADER */
 .header {
-  background: var(--cor-branco);
-  border-bottom: 2px solid var(--cor-verde-escuro);
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--cor-verde);
   padding: 1rem 1.5rem;
   display: flex;
   align-items: center;
-  gap: 15px;
+  justify-content: space-between;
   position: sticky;
-  top: 0;
+  top: 8px;
   z-index: 100;
+  transition: background 0.3s;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
-  background: var(--cor-verde-escuro);
-  border-radius: 8px;
+  width: 45px;
+  height: 45px;
+  background: linear-gradient(135deg, var(--cor-verde) 0%, var(--cor-verde-d) 100%);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--cor-branco);
+  color: white;
   font-weight: bold;
   font-size: 18px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(85, 107, 77, 0.25);
 }
 
 .titulo {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
 }
 
-/* CONTAINER */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.sync-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--cor-texto-s);
+}
+
+.sync-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #999;
+}
+
+.sync-dot.ok {
+  background: #4CAF50;
+}
+
+.sync-dot.err {
+  background: #f44336;
+}
+
+.btn-admin {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  padding: 5px 10px;
+  color: var(--cor-texto-s);
+  transition: all 0.2s;
+}
+
+.btn-admin:hover {
+  color: var(--cor-verde);
+  transform: rotate(20deg);
+}
+
+.btn-theme {
+  background: transparent;
+  border: 1px solid var(--cor-borda);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: all 0.3s;
+}
+
+.btn-theme:hover {
+  background: var(--cor-nude);
+  border-color: var(--cor-verde);
+}
+
 .container {
-  max-width: 700px;
+  max-width: 800px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
 
-/* ABAS */
 .abas {
   display: flex;
   gap: 8px;
   margin-bottom: 2rem;
-  background: var(--cor-branco);
+  background: white;
   padding: 8px;
   border-radius: 12px;
-  border: 1px solid var(--cor-border);
+  border: 1px solid var(--cor-borda);
+  flex-wrap: wrap;
 }
 
 .aba {
   flex: 1;
+  min-width: 80px;
   padding: 10px 12px;
   background: transparent;
   border: none;
@@ -93,20 +193,19 @@ body {
   font-size: 13px;
   font-weight: 500;
   border-radius: 8px;
-  color: var(--cor-texto-cinza);
+  color: var(--cor-texto-s);
   transition: all 0.2s;
 }
 
 .aba.ativo {
-  background: var(--cor-verde-escuro);
-  color: var(--cor-branco);
+  background: var(--cor-verde);
+  color: white;
 }
 
 .aba:hover {
-  background: var(--cor-nude-claro);
+  background: var(--cor-nude);
 }
 
-/* SECOES */
 .secao {
   display: none;
 }
@@ -115,29 +214,28 @@ body {
   display: block;
 }
 
-/* CARDS */
 .card {
-  background: var(--cor-branco);
-  border: 1px solid var(--cor-border);
+  background: var(--bg-card);
+  border: 1px solid var(--cor-borda);
   border-radius: 12px;
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: background 0.3s, border-color 0.3s;
 }
 
 .card-titulo {
   font-size: 16px;
   font-weight: 600;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
   margin-bottom: 1rem;
   border-bottom: 2px solid var(--cor-lilas);
   padding-bottom: 0.75rem;
 }
 
-/* METRICAS */
 .metricas {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 12px;
   margin-bottom: 1.5rem;
 }
@@ -152,21 +250,20 @@ body {
 
 .metrica-label {
   font-size: 12px;
-  color: var(--cor-texto-cinza);
+  color: var(--cor-texto-s);
   margin-bottom: 5px;
 }
 
 .metrica-valor {
   font-size: 24px;
   font-weight: 700;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
 }
 
-/* BOTOES */
 .btn {
   padding: 8px 16px;
-  background: var(--cor-verde-escuro);
-  color: var(--cor-branco);
+  background: var(--cor-verde);
+  color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -176,44 +273,39 @@ body {
 }
 
 .btn:hover {
-  background: var(--cor-verde-escuro-dark);
+  background: var(--cor-verde-d);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(45, 122, 99, 0.3);
 }
 
-.btn-pequeno {
-  padding: 6px 12px;
-  font-size: 12px;
-}
-
-.btn-secundario {
+.btn-sec {
   background: var(--cor-lilas);
   color: var(--cor-texto);
 }
 
-.btn-secundario:hover {
-  background: var(--cor-lilas-escuro);
+.btn-sec:hover {
+  background: #D4AADB;
 }
 
-/* INPUTS */
 input, select, textarea {
   width: 100%;
   padding: 10px;
-  border: 1px solid var(--cor-border);
+  border: 1px solid var(--cor-borda);
   border-radius: 8px;
   font-size: 13px;
   font-family: inherit;
   margin-bottom: 10px;
+  background: var(--bg-card);
+  color: var(--text-primary);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
 }
 
 input:focus, select:focus, textarea:focus {
   outline: none;
-  border-color: var(--cor-verde-escuro);
-  background-color: var(--cor-nude-claro);
-  box-shadow: 0 0 0 3px var(--cor-verde-claro);
+  border-color: var(--cor-verde);
+  background: var(--bg-card);
+  box-shadow: 0 0 0 3px var(--cor-verde-c);
 }
 
-/* FORM */
 .form-linha {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -229,14 +321,13 @@ input:focus, select:focus, textarea:focus {
 .form-grupo label {
   font-size: 12px;
   font-weight: 600;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
   margin-bottom: 5px;
 }
 
-/* LISTA */
-.lista-item {
-  background: var(--cor-nude-claro);
-  border-left: 4px solid var(--cor-verde-escuro);
+.item-lista {
+  background: var(--cor-nude);
+  border-left: 4px solid var(--cor-verde);
   padding: 12px;
   margin-bottom: 10px;
   border-radius: 6px;
@@ -245,52 +336,45 @@ input:focus, select:focus, textarea:focus {
   align-items: center;
 }
 
-.lista-item-nome {
+.item-info {
+  flex: 1;
+}
+
+.item-nome {
   font-weight: 600;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
 }
 
-.lista-item-info {
+.item-meta {
   font-size: 12px;
-  color: var(--cor-texto-cinza);
+  color: var(--cor-texto-s);
+  margin-top: 3px;
 }
 
-/* BADGES */
 .badge {
   display: inline-block;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
+  margin-right: 5px;
 }
 
 .badge-verde {
-  background: var(--cor-verde-claro);
-  color: var(--cor-verde-escuro);
+  background: var(--cor-verde-c);
+  color: var(--cor-verde);
 }
 
-.badge-lilас {
+.badge-lilas {
   background: var(--cor-lilas);
   color: var(--cor-texto);
 }
 
 .badge-vermelho {
   background: #FFCCCB;
-  color: var(--cor-vermelho);
+  color: #A32D2D;
 }
 
-/* AVISO SYNC */
-.aviso-sync {
-  background: var(--cor-lilas);
-  border: 1px solid var(--cor-lilas-escuro);
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 1rem;
-  font-size: 13px;
-  color: var(--cor-texto);
-}
-
-/* MODAL */
 .modal-fundo {
   display: none;
   position: fixed;
@@ -309,7 +393,7 @@ input:focus, select:focus, textarea:focus {
 }
 
 .modal {
-  background: var(--cor-branco);
+  background: white;
   border-radius: 12px;
   padding: 2rem;
   max-width: 500px;
@@ -321,7 +405,7 @@ input:focus, select:focus, textarea:focus {
 .modal-titulo {
   font-size: 18px;
   font-weight: 700;
-  color: var(--cor-verde-escuro);
+  color: var(--cor-verde);
   margin-bottom: 1.5rem;
 }
 
@@ -332,10 +416,9 @@ input:focus, select:focus, textarea:focus {
   margin-top: 1.5rem;
 }
 
-/* PREVIEW MENSAGEM */
 .preview-msg {
   background: var(--cor-nude);
-  border: 1px solid var(--cor-lilас);
+  border: 1px solid var(--cor-lilas);
   border-radius: 8px;
   padding: 12px;
   font-size: 12px;
@@ -347,28 +430,118 @@ input:focus, select:focus, textarea:focus {
   font-family: 'Courier New', monospace;
 }
 
+.tabs-msg {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.tab-msg {
+  padding: 6px 12px;
+  background: var(--cor-verde-c);
+  border: 1px solid var(--cor-borda);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--cor-verde);
+  transition: all 0.2s;
+}
+
+.tab-msg.ativo {
+  background: var(--cor-verde);
+  color: white;
+  border-color: var(--cor-verde);
+}
+
+.historico-item {
+  background: var(--cor-verde-c);
+  border-left: 4px solid var(--cor-verde);
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+}
+
+.hist-data {
+  font-size: 11px;
+  color: var(--cor-texto-s);
+  margin-bottom: 4px;
+}
+
+.hist-conteudo {
+  font-size: 13px;
+  color: var(--cor-texto);
+}
+
+.relatorio {
+  background: var(--cor-nude);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.rel-titulo {
+  font-weight: 600;
+  color: var(--cor-verde);
+  margin-bottom: 0.5rem;
+}
+
+.rel-valor {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cor-verde);
+}
+
+.rel-meta {
+  font-size: 12px;
+  color: var(--cor-texto-s);
+  margin-top: 4px;
+}
+
 @media (max-width: 600px) {
-  .metricas {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .form-linha {
     grid-template-columns: 1fr;
+  }
+  .metricas {
+    grid-template-columns: 1fr;
+  }
+  .aba {
+    min-width: 60px;
+    padding: 8px;
+    font-size: 12px;
   }
 }
 </style>
 </head>
 <body>
 
+<!-- Barra de referência de cores (será substituída) -->
+<div class="color-reference-bar"></div>
+
 <!-- HEADER -->
 <div class="header">
-  <div class="logo">F</div>
-  <div class="titulo">Gestão Fono</div>
-</div>
-
-<!-- AVISO -->
-<div class="container">
-  <div class="aviso-sync" id="aviso">
-    ⚠️ Configure a URL do Apps Script na aba <strong>Configurações</strong> para sincronizar com Google Sheets
+  <div class="header-left">
+    <div class="logo">
+      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" width="45" height="45">
+        <!-- G elegante -->
+        <path d="M30 10C18 10 10 18 10 30C10 42 18 50 30 50C42 50 50 42 50 30M30 15C21 15 15 21 15 30C15 39 21 45 30 45C39 45 45 39 45 30M30 24L30 36M24 30L36 30" 
+              stroke="white" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 2px; margin-left: 8px;">
+      <div class="titulo">GiFono</div>
+      <div style="font-size: 9px; color: var(--cor-texto-s); letter-spacing: 1.5px; font-weight: 500;">FONOAUDIÓLOGA</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <button class="btn-theme" onclick="toggleTheme()" title="Alternar tema claro/escuro">
+      <span id="theme-icon">🌙</span>
+    </button>
+    <div class="sync-status">
+      <span id="sync-label">Offline</span>
+      <div class="sync-dot" id="sync-dot"></div>
+    </div>
+    <button class="btn-admin" onclick="abrirConfig()" title="Configurações (Admin)">⚙️</button>
   </div>
 </div>
 
@@ -381,7 +554,8 @@ input:focus, select:focus, textarea:focus {
     <button class="aba" onclick="trocarAba('pacientes')">👥 Pacientes</button>
     <button class="aba" onclick="trocarAba('financeiro')">💰 Financeiro</button>
     <button class="aba" onclick="trocarAba('mensagens')">💬 Mensagens</button>
-    <button class="aba" onclick="trocarAba('config')">⚙️ Config</button>
+    <button class="aba" onclick="trocarAba('historico')">📊 Histórico</button>
+    <button class="aba" onclick="trocarAba('relatorios')">📈 Relatórios</button>
   </div>
 
   <!-- ABA AGENDA -->
@@ -400,14 +574,13 @@ input:focus, select:focus, textarea:focus {
         <div class="metrica-valor" id="m-conf">0</div>
       </div>
       <div class="metrica">
-        <div class="metrica-label">Canceladas</div>
-        <div class="metrica-valor" id="m-cancel">0</div>
+        <div class="metrica-label">Pendentes</div>
+        <div class="metrica-valor" id="m-pend">0</div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-titulo">Sessões Agendadas</div>
-      <button class="btn btn-pequeno" onclick="abrirModal('sessao')">+ Nova Sessão</button>
+      <button class="btn" onclick="abrirModal('sessao')">+ Nova Sessão</button>
       <div id="lista-agenda" style="margin-top: 1rem;"></div>
     </div>
   </div>
@@ -416,7 +589,7 @@ input:focus, select:focus, textarea:focus {
   <div class="secao" id="pacientes">
     <div class="card">
       <div class="card-titulo">Pacientes</div>
-      <button class="btn btn-pequeno" onclick="abrirModal('paciente')">+ Novo Paciente</button>
+      <button class="btn" onclick="abrirModal('paciente')">+ Novo Paciente</button>
       <div id="lista-pacientes" style="margin-top: 1rem;"></div>
     </div>
   </div>
@@ -426,21 +599,20 @@ input:focus, select:focus, textarea:focus {
     <div class="metricas">
       <div class="metrica">
         <div class="metrica-label">Recebido</div>
-        <div class="metrica-valor" id="f-rec" style="color: var(--cor-verde);">R$ 0</div>
+        <div class="metrica-valor" id="f-rec" style="color: #4CAF50;">R$ 0</div>
       </div>
       <div class="metrica">
         <div class="metrica-label">Pendente</div>
-        <div class="metrica-valor" id="f-pend" style="color: var(--cor-lilас);">R$ 0</div>
+        <div class="metrica-valor" id="f-pend" style="color: #FF9800;">R$ 0</div>
       </div>
       <div class="metrica">
         <div class="metrica-label">Atrasado</div>
-        <div class="metrica-valor" id="f-atras" style="color: var(--cor-vermelho);">R$ 0</div>
+        <div class="metrica-valor" id="f-atras" style="color: #f44336;">R$ 0</div>
       </div>
     </div>
-
     <div class="card">
       <div class="card-titulo">Controle de Pagamentos</div>
-      <button class="btn btn-pequeno" onclick="exportarCSV()">📊 Exportar CSV</button>
+      <button class="btn" onclick="exportarCSV()">📊 Exportar CSV</button>
       <div id="lista-financeiro" style="margin-top: 1rem;"></div>
     </div>
   </div>
@@ -451,55 +623,61 @@ input:focus, select:focus, textarea:focus {
       <div class="card-titulo">Gerador de Mensagens WhatsApp</div>
       
       <div class="form-grupo">
-        <label>Selecione o Paciente</label>
+        <label>Paciente (Opcional)</label>
         <select id="msg-paciente" onchange="atualizarMsg()">
+          <option value="">-- Sem paciente específico --</option>
+        </select>
+      </div>
+
+      <div class="tabs-msg">
+        <button class="tab-msg ativo" onclick="selecionarTipoMsg(this, 'lembrete')">Lembrete</button>
+        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'confirmacao')">Confirmar</button>
+        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'cobranca')">Cobrança</button>
+        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'cancelamento')">Cancelamento</button>
+      </div>
+
+      <label style="color: var(--cor-verde); font-weight: 600;">Mensagem (Editável):</label>
+      <textarea id="preview-msg" style="min-height: 150px; font-family: 'Courier New', monospace;">Selecione um tipo de mensagem ou edite o texto abaixo</textarea>
+
+      <button class="btn" onclick="copiarMsg()">📋 Copiar</button>
+      <button class="btn btn-sec" onclick="abrirWhatsApp()" style="margin-left: 10px;">💬 Enviar WhatsApp</button>
+      <button class="btn" onclick="salvarTemplate()" style="margin-left: 10px; background: var(--cor-lilas); color: var(--cor-texto);">💾 Salvar como Template</button>
+    </div>
+
+    <div class="card">
+      <div class="card-titulo">Meus Templates</div>
+      <button class="btn btn-sec" onclick="novoTemplate()">+ Novo Template</button>
+      <div id="lista-templates" style="margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <!-- ABA HISTÓRICO -->
+  <div class="secao" id="historico">
+    <div class="card">
+      <div class="card-titulo">Histórico do Paciente</div>
+      
+      <div class="form-grupo">
+        <label>Selecione o Paciente</label>
+        <select id="hist-paciente" onchange="carregarHistorico()">
           <option value="">-- Selecione --</option>
         </select>
       </div>
 
-      <div style="margin: 1rem 0;">
-        <strong style="color: var(--cor-verde-escuro);">Tipo de Mensagem:</strong>
-        <div style="margin-top: 0.5rem; display: flex; gap: 8px; flex-wrap: wrap;">
-          <button class="badge badge-verde" onclick="selecionarTipoMsg(this, 'lembrete')">Lembrete</button>
-          <button class="badge badge-lilас" onclick="selecionarTipoMsg(this, 'confirmacao')">Confirmar</button>
-          <button class="badge badge-lilас" onclick="selecionarTipoMsg(this, 'cobranca')">Cobrança</button>
-          <button class="badge badge-vermelho" onclick="selecionarTipoMsg(this, 'cancelamento')">Cancelamento</button>
-        </div>
-      </div>
-
-      <label style="color: var(--cor-verde-escuro); font-weight: 600;">Prévia da Mensagem:</label>
-      <div class="preview-msg" id="preview-msg">Selecione um paciente para gerar a mensagem.</div>
-
-      <button class="btn" onclick="copiarMsg()">📋 Copiar Mensagem</button>
-      <button class="btn btn-secundario" onclick="abrirWhatsApp()" style="margin-left: 10px;">💬 Enviar no WhatsApp</button>
+      <div id="historico-conteudo" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
-  <!-- ABA CONFIG -->
-  <div class="secao" id="config">
+  <!-- ABA RELATÓRIOS -->
+  <div class="secao" id="relatorios">
     <div class="card">
-      <div class="card-titulo">Configurações</div>
+      <div class="card-titulo">Relatório do Mês</div>
       
       <div class="form-grupo">
-        <label>URL do Apps Script</label>
-        <input type="url" id="cfg-url" placeholder="https://script.google.com/macros/s/..." oninput="salvarConfig()">
+        <label>Mês/Ano</label>
+        <input type="month" id="rel-mes" onchange="gerarRelatorio()" value="">
       </div>
 
-      <button class="btn" onclick="testarSync()">🔄 Testar Sincronização</button>
-      <button class="btn btn-secundario" onclick="limparDados()" style="margin-left: 10px;">🗑️ Limpar Dados</button>
-
-      <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 2px solid var(--cor-lilас);">
-        <strong style="color: var(--cor-verde-escuro);">Passo a Passo (Apps Script):</strong>
-        <ol style="margin-top: 0.5rem; color: var(--cor-texto-cinza); font-size: 12px; line-height: 1.8;">
-          <li>Abra Google Sheets e crie uma planilha nova</li>
-          <li>Menu: Extensões > Apps Script</li>
-          <li>Cole o código do arquivo fono_apps_script_com_formatacao.gs</li>
-          <li>Implantar > Nova implantação > Aplicativo da web</li>
-          <li>"Quem tem acesso": selecione "Qualquer pessoa"</li>
-          <li>Copie a URL e cole no campo acima</li>
-          <li>Clique em "Testar Sincronização"</li>
-        </ol>
-      </div>
+      <div id="relatorio-conteudo" style="margin-top: 1rem;"></div>
     </div>
   </div>
 
@@ -536,13 +714,13 @@ input:focus, select:focus, textarea:focus {
       </select>
     </div>
     <div class="modal-rodape">
-      <button class="btn btn-secundario" onclick="fecharModal('paciente')">Cancelar</button>
+      <button class="btn btn-sec" onclick="fecharModal('paciente')">Cancelar</button>
       <button class="btn" onclick="salvarPaciente()">Salvar</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL SESSAO -->
+<!-- MODAL SESSÃO -->
 <div class="modal-fundo" id="modal-sessao">
   <div class="modal">
     <div class="modal-titulo">Nova Sessão</div>
@@ -585,27 +763,84 @@ input:focus, select:focus, textarea:focus {
       </div>
     </div>
     <div class="modal-rodape">
-      <button class="btn btn-secundario" onclick="fecharModal('sessao')">Cancelar</button>
+      <button class="btn btn-sec" onclick="fecharModal('sessao')">Cancelar</button>
       <button class="btn" onclick="salvarSessao()">Salvar</button>
     </div>
   </div>
 </div>
 
+<!-- MODAL CONFIG (ADMIN) -->
+<div class="modal-fundo" id="modal-config">
+  <div class="modal">
+    <div class="modal-titulo">⚙️ Configurações (Admin)</div>
+    
+    <div class="form-grupo">
+      <label>URL do Apps Script</label>
+      <input type="url" id="cfg-url" placeholder="https://script.google.com/macros/s/..." oninput="salvarConfig()">
+    </div>
+
+    <button class="btn" onclick="sincronizarAgora()" style="width: 100%;">🔄 Sincronizar Agora</button>
+    <button class="btn btn-sec" onclick="puxarDadosSheets()" style="width: 100%; margin-top: 10px;">📥 Puxar Dados do Sheets</button>
+
+    <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 2px solid var(--cor-lilas);">
+      <strong style="color: var(--cor-verde);">Passo a Passo:</strong>
+      <ol style="margin-top: 0.5rem; color: var(--cor-texto-s); font-size: 12px; line-height: 1.8; padding-left: 1.25rem;">
+        <li>Abra Google Sheets</li>
+        <li>Extensões > Apps Script</li>
+        <li>Cole código do fono_apps_script_com_formatacao.gs</li>
+        <li>Implantar > Nova implantação > Aplicativo da web</li>
+        <li>Copie URL e cole acima</li>
+      </ol>
+    </div>
+
+    <div class="modal-rodape">
+      <button class="btn btn-sec" onclick="fecharModal('config')">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <script>
-let pacientes = JSON.parse(localStorage.getItem('fg_pac') || '[]');
-let sessoes = JSON.parse(localStorage.getItem('fg_ses') || '[]');
-let cfg = JSON.parse(localStorage.getItem('fg_cfg') || '{"url":""}');
+let pacientes = JSON.parse(localStorage.getItem('gifono_pac') || '[]');
+let sessoes = JSON.parse(localStorage.getItem('gifono_ses') || '[]');
+let templates = JSON.parse(localStorage.getItem('gifono_templates') || '{"lembrete":"","confirmacao":"","cobranca":"","cancelamento":""}');
+let cfg = JSON.parse(localStorage.getItem('gifono_cfg') || '{"url":""}');
 let tipoMsgAtual = 'lembrete';
 
+// ── SISTEMA DE TEMA ──────────────────────────────
+function initTheme() {
+  const savedTheme = localStorage.getItem('gifono_theme') || 'light';
+  setTheme(savedTheme);
+}
+
+function toggleTheme() {
+  const isDark = document.documentElement.classList.contains('dark-mode') || document.body.classList.contains('dark-mode');
+  setTheme(isDark ? 'light' : 'dark');
+}
+
+function setTheme(theme) {
+  localStorage.setItem('gifono_theme', theme);
+  const isDark = theme === 'dark';
+  
+  if (isDark) {
+    document.body.classList.add('dark-mode');
+    document.documentElement.classList.add('dark-mode');
+    document.getElementById('theme-icon').textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-mode');
+    document.documentElement.classList.remove('dark-mode');
+    document.getElementById('theme-icon').textContent = '🌙';
+  }
+}
+
 function salvarDados() {
-  localStorage.setItem('fg_pac', JSON.stringify(pacientes));
-  localStorage.setItem('fg_ses', JSON.stringify(sessoes));
+  localStorage.setItem('gifono_pac', JSON.stringify(pacientes));
+  localStorage.setItem('gifono_ses', JSON.stringify(sessoes));
+  localStorage.setItem('gifono_templates', JSON.stringify(templates));
 }
 
 function salvarConfig() {
   cfg.url = document.getElementById('cfg-url').value.trim();
-  localStorage.setItem('fg_cfg', JSON.stringify(cfg));
-  document.getElementById('aviso').style.display = cfg.url ? 'none' : 'block';
+  localStorage.setItem('gifono_cfg', JSON.stringify(cfg));
 }
 
 function trocarAba(nome) {
@@ -614,6 +849,11 @@ function trocarAba(nome) {
   document.getElementById(nome).classList.add('ativa');
   event.target.classList.add('ativo');
   renderizar();
+}
+
+function abrirConfig() {
+  document.getElementById('cfg-url').value = cfg.url;
+  document.getElementById('modal-config').classList.add('aberto');
 }
 
 function abrirModal(tipo) {
@@ -649,6 +889,7 @@ function salvarPaciente() {
   salvarDados();
   fecharModal('paciente');
   renderizar();
+  if (cfg.url) sincronizarAgora();
 }
 
 function salvarSessao() {
@@ -670,10 +911,11 @@ function salvarSessao() {
   salvarDados();
   fecharModal('sessao');
   renderizar();
+  if (cfg.url) sincronizarAgora();
 }
 
 function deletarPaciente(id) {
-  if (!confirm('Remover?')) return;
+  if (!confirm('Remover paciente e suas sessões?')) return;
   pacientes = pacientes.filter(p => p.id !== id);
   sessoes = sessoes.filter(s => s.pacId !== id);
   salvarDados();
@@ -681,7 +923,7 @@ function deletarPaciente(id) {
 }
 
 function deletarSessao(id) {
-  if (!confirm('Remover?')) return;
+  if (!confirm('Remover sessão?')) return;
   sessoes = sessoes.filter(s => s.id !== id);
   salvarDados();
   renderizar();
@@ -693,6 +935,7 @@ function renderizar() {
   renderPacientes();
   renderFinanceiro();
   populateMsgSelect();
+  populateHistorico();
 }
 
 function renderMetricas() {
@@ -704,7 +947,7 @@ function renderMetricas() {
   document.getElementById('m-hoje').textContent = sessoes.filter(s => s.data === today).length;
   document.getElementById('m-semana').textContent = sessoes.filter(s => s.data >= sw).length;
   document.getElementById('m-conf').textContent = sessoes.filter(s => s.status === 'confirmada').length;
-  document.getElementById('m-cancel').textContent = sessoes.filter(s => s.status === 'cancelada').length;
+  document.getElementById('m-pend').textContent = sessoes.filter(s => s.status === 'aguardando').length;
 }
 
 function renderAgenda() {
@@ -712,32 +955,32 @@ function renderAgenda() {
   if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão agendada</p>'; return; }
   const sorted = [...sessoes].sort((a, b) => a.data.localeCompare(b.data));
   el.innerHTML = sorted.map(s => `
-    <div class="lista-item">
-      <div>
-        <div class="lista-item-nome">${s.pacNome}</div>
-        <div class="lista-item-info">${s.data} ${s.hora} • R$ ${s.valor.toFixed(2)}</div>
+    <div class="item-lista">
+      <div class="item-info">
+        <div class="item-nome">${s.pacNome}</div>
+        <div class="item-meta">${s.data} ${s.hora} • R$ ${s.valor.toFixed(2)}</div>
         <div style="margin-top: 5px;">
           <span class="badge ${s.status === 'confirmada' ? 'badge-verde' : 'badge-vermelho'}">${s.status}</span>
-          <span class="badge ${s.pag === 'pago' ? 'badge-verde' : 'badge-lilас'}" style="margin-left: 5px;">${s.pag}</span>
+          <span class="badge ${s.pag === 'pago' ? 'badge-verde' : 'badge-lilas'}">${s.pag}</span>
         </div>
       </div>
-      <button class="btn btn-pequeno" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333;">✕</button>
+      <button class="btn" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
     </div>
   `).join('');
 }
 
 function renderPacientes() {
   const el = document.getElementById('lista-pacientes');
-  if (!pacientes.length) { el.innerHTML = '<p style="color: #999;">Nenhum paciente cadastrado</p>'; return; }
+  if (!pacientes.length) { el.innerHTML = '<p style="color: #999;">Nenhum paciente</p>'; return; }
   el.innerHTML = pacientes.map(p => {
     const pend = sessoes.filter(s => s.pacId === p.id && s.pag !== 'pago').length;
     return `
-      <div class="lista-item">
-        <div>
-          <div class="lista-item-nome">${p.nome}</div>
-          <div class="lista-item-info">${p.esp} • R$ ${p.valor}/sessão ${pend ? '• ' + pend + ' pendente(s)' : '• em dia'}</div>
+      <div class="item-lista">
+        <div class="item-info">
+          <div class="item-nome">${p.nome}</div>
+          <div class="item-meta">${p.esp} • R$ ${p.valor}/sessão ${pend ? '• ' + pend + ' pendente(s)' : '• em dia'}</div>
         </div>
-        <button class="btn btn-pequeno" onclick="deletarPaciente(${p.id})" style="background: #ccc; color: #333;">✕</button>
+        <button class="btn" onclick="deletarPaciente(${p.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
       </div>
     `;
   }).join('');
@@ -752,62 +995,155 @@ function renderFinanceiro() {
   document.getElementById('f-atras').textContent = 'R$ ' + atras.toFixed(2);
   
   const el = document.getElementById('lista-financeiro');
-  if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão registrada</p>'; return; }
+  if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão</p>'; return; }
   el.innerHTML = sessoes.map(s => `
-    <div class="lista-item">
-      <div>
-        <div class="lista-item-nome">${s.pacNome}</div>
-        <div class="lista-item-info">${s.data} • R$ ${s.valor.toFixed(2)}</div>
+    <div class="item-lista">
+      <div class="item-info">
+        <div class="item-nome">${s.pacNome}</div>
+        <div class="item-meta">${s.data} • R$ ${s.valor.toFixed(2)}</div>
       </div>
-      <span class="badge ${s.pag === 'pago' ? 'badge-verde' : s.pag === 'atrasado' ? 'badge-vermelho' : 'badge-lilас'}">${s.pag}</span>
+      <span class="badge ${s.pag === 'pago' ? 'badge-verde' : s.pag === 'atrasado' ? 'badge-vermelho' : 'badge-lilas'}">${s.pag}</span>
     </div>
   `).join('');
 }
 
 function populateMsgSelect() {
   const sel = document.getElementById('msg-paciente');
-  sel.innerHTML = '<option value="">-- Selecione --</option>' + pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+  sel.innerHTML = '<option value="">-- Sem paciente específico --</option>' + pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
   atualizarMsg();
 }
 
 function selecionarTipoMsg(btn, tipo) {
-  document.querySelectorAll('.badge').forEach(b => b.style.opacity = '0.5');
-  btn.style.opacity = '1';
+  document.querySelectorAll('.tab-msg').forEach(b => b.classList.remove('ativo'));
+  btn.classList.add('ativo');
   tipoMsgAtual = tipo;
   atualizarMsg();
 }
 
 function atualizarMsg() {
-  const pid = parseInt(document.getElementById('msg-paciente').value);
-  const p = pacientes.find(x => x.id === pid);
+  const pid = parseInt(document.getElementById('msg-paciente').value) || null;
+  const p = pid ? pacientes.find(x => x.id === pid) : null;
   const el = document.getElementById('preview-msg');
-  if (!p) { el.textContent = 'Selecione um paciente para gerar a mensagem.'; return; }
-  const prox = sessoes.filter(s => s.pacId === pid && s.data >= new Date().toISOString().split('T')[0]).sort((a,b) => a.data.localeCompare(b.data))[0];
-  const nome = p.nome.split(' ')[0];
-  const dataFmt = prox ? new Date(prox.data + 'T12:00').toLocaleDateString('pt-BR', {weekday:'long',day:'2-digit',month:'long'}) : 'a definir';
-  const hora = prox?.hora ? ' às ' + prox.hora : '';
-  const msgs = {
-    lembrete: `Olá, ${nome}!\n\nPassando para lembrar da sua sessão de fonoaudiologia:\n\nData: ${dataFmt}${hora}\n\nQualquer dúvida, é só me chamar. Até lá!`,
-    confirmacao: `Olá, ${nome}! Tudo bem?\n\nPode confirmar presença para sua sessão?\n\nData: ${dataFmt}${hora}\n\nResponda com SIM para confirmar.`,
-    cobranca: `Olá, ${nome}!\n\nGostaria de verificar o pagamento da sua(s) sessão(ões) em aberto (R$ ${p.valor.toFixed(2)}).\n\nQuando puder, envie o comprovante. Obrigada!`,
-    cancelamento: `Olá, ${nome}!\n\nVi que precisou cancelar a sessão. Tudo bem?\n\nLembrando que cancelamentos com menos de 24h são cobrados integralmente.`
-  };
-  el.textContent = msgs[tipoMsgAtual] || '';
+  
+  if (templates[tipoMsgAtual]) {
+    el.value = templates[tipoMsgAtual];
+  } else {
+    const prox = pid ? sessoes.filter(s => s.pacId === pid && s.data >= new Date().toISOString().split('T')[0]).sort((a,b) => a.data.localeCompare(b.data))[0] : null;
+    const nome = p ? p.nome.split(' ')[0] : 'Cliente';
+    const dataFmt = prox ? new Date(prox.data + 'T12:00').toLocaleDateString('pt-BR', {weekday:'long',day:'2-digit',month:'long'}) : 'a definir';
+    const hora = prox?.hora ? ' às ' + prox.hora : '';
+    
+    const msgs = {
+      lembrete: `Olá, ${nome}!\n\nPassando para lembrar da sua sessão de fonoaudiologia:\n\nData: ${dataFmt}${hora}\n\nQualquer dúvida, é só me chamar. Até lá!`,
+      confirmacao: `Olá, ${nome}! Tudo bem?\n\nPode confirmar presença para sua sessão?\n\nData: ${dataFmt}${hora}\n\nResponda com SIM para confirmar.`,
+      cobranca: `Olá, ${nome}!\n\nGostaria de verificar o pagamento da(s) sua(s) sessão(ões) em aberto.\n\nQuando puder, envie o comprovante. Obrigada!`,
+      cancelamento: `Olá, ${nome}!\n\nVi que precisou cancelar a sessão. Tudo bem?\n\nLembrando que cancelamentos com menos de 24h são cobrados integralmente.`
+    };
+    el.value = msgs[tipoMsgAtual] || '';
+  }
 }
 
 function copiarMsg() {
-  const text = document.getElementById('preview-msg').textContent;
-  navigator.clipboard.writeText(text).then(() => alert('Copiado!')).catch(() => alert('Erro ao copiar'));
+  const text = document.getElementById('preview-msg').value;
+  navigator.clipboard.writeText(text).then(() => alert('Copiado!')).catch(() => alert('Erro'));
 }
 
 function abrirWhatsApp() {
   const pid = parseInt(document.getElementById('msg-paciente').value);
   const p = pacientes.find(x => x.id === pid);
   if (!p) { alert('Selecione um paciente'); return; }
-  const text = document.getElementById('preview-msg').textContent;
+  const text = document.getElementById('preview-msg').value;
   const fone = p.fone?.replace(/\D/g, '') || '';
   const url = fone ? `https://wa.me/55${fone}?text=${encodeURIComponent(text)}` : `https://wa.me/?text=${encodeURIComponent(text)}`;
   window.open(url, '_blank');
+}
+
+function salvarTemplate() {
+  templates[tipoMsgAtual] = document.getElementById('preview-msg').value;
+  salvarDados();
+  alert('Template salvo!');
+  renderizarTemplates();
+}
+
+function novoTemplate() {
+  const nome = prompt('Nome do template:');
+  if (!nome) return;
+  const msg = prompt('Mensagem:');
+  if (!msg) return;
+  templates['custom_' + Date.now()] = msg;
+  salvarDados();
+  renderizarTemplates();
+}
+
+function renderizarTemplates() {
+  const el = document.getElementById('lista-templates');
+  const templ = Object.entries(templates).filter(([k,v]) => v && typeof v === 'string');
+  if (!templ.length) { el.innerHTML = '<p style="color: #999;">Nenhum template</p>'; return; }
+  el.innerHTML = templ.map(([k,v]) => `
+    <div class="item-lista">
+      <div class="item-info">
+        <div class="item-nome">${k}</div>
+        <div class="item-meta" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${v.substring(0, 50)}...</div>
+      </div>
+      <button class="btn" onclick="copiarTemplate('${k}')" style="background: var(--cor-verde); color: white; padding: 5px 10px;">Copiar</button>
+    </div>
+  `).join('');
+}
+
+function copiarTemplate(k) {
+  navigator.clipboard.writeText(templates[k]).then(() => alert('Copiado!')).catch(() => alert('Erro'));
+}
+
+function populateHistorico() {
+  const sel = document.getElementById('hist-paciente');
+  sel.innerHTML = '<option value="">-- Selecione --</option>' + pacientes.map(p => `<option value="${p.id}">${p.nome}</option>`).join('');
+}
+
+function carregarHistorico() {
+  const pid = parseInt(document.getElementById('hist-paciente').value);
+  const p = pacientes.find(x => x.id === pid);
+  const el = document.getElementById('historico-conteudo');
+  if (!p) { el.innerHTML = '<p style="color: #999;">Selecione um paciente</p>'; return; }
+  const hists = sessoes.filter(s => s.pacId === pid).sort((a,b) => b.data.localeCompare(a.data));
+  if (!hists.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão</p>'; return; }
+  el.innerHTML = hists.map(s => `
+    <div class="historico-item">
+      <div class="hist-data">${s.data} ${s.hora}</div>
+      <div class="hist-conteudo"><strong>Status:</strong> ${s.status} | <strong>Pagamento:</strong> ${s.pag} | <strong>Valor:</strong> R$ ${s.valor.toFixed(2)}</div>
+    </div>
+  `).join('');
+}
+
+function gerarRelatorio() {
+  const mes = document.getElementById('rel-mes').value;
+  if (!mes) return;
+  const [ano, mês] = mes.split('-');
+  const prefix = ano + '-' + mês;
+  const sessoesMes = sessoes.filter(s => s.data.startsWith(prefix));
+  const rec = sessoesMes.filter(s => s.pag === 'pago').reduce((a,s) => a + s.valor, 0);
+  const pend = sessoesMes.filter(s => s.pag === 'pendente').reduce((a,s) => a + s.valor, 0);
+  const atras = sessoesMes.filter(s => s.pag === 'atrasado').reduce((a,s) => a + s.valor, 0);
+  const total = sessoesMes.length;
+  const confirmadas = sessoesMes.filter(s => s.status === 'confirmada').length;
+  
+  const el = document.getElementById('relatorio-conteudo');
+  el.innerHTML = `
+    <div class="relatorio">
+      <div class="rel-titulo">Sessões Realizadas</div>
+      <div class="rel-valor">${total}</div>
+      <div class="rel-meta">Confirmadas: ${confirmadas}</div>
+    </div>
+    <div class="relatorio">
+      <div class="rel-titulo">Receita Total</div>
+      <div class="rel-valor">R$ ${(rec + pend + atras).toFixed(2)}</div>
+      <div class="rel-meta">Recebido: R$ ${rec.toFixed(2)}</div>
+    </div>
+    <div class="relatorio">
+      <div class="rel-titulo">Pendências</div>
+      <div class="rel-valor">R$ ${(pend + atras).toFixed(2)}</div>
+      <div class="rel-meta">Pendente: R$ ${pend.toFixed(2)} | Atrasado: R$ ${atras.toFixed(2)}</div>
+    </div>
+  `;
 }
 
 function exportarCSV() {
@@ -818,26 +1154,60 @@ function exportarCSV() {
   const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'sessoes.csv';
+  a.download = 'gifono_' + new Date().toISOString().split('T')[0] + '.csv';
   a.click();
 }
 
-async function testarSync() {
+async function sincronizarAgora() {
   if (!cfg.url) { alert('Configure URL primeiro'); return; }
   try {
     const res = await fetch(cfg.url, {method: 'POST', body: JSON.stringify({action: 'sync', pacientes, sessoes})});
     const json = await res.json();
-    if (json.status === 'ok') { alert('Sincronizado!'); } else { alert('Erro: ' + json.msg); }
-  } catch(e) { alert('Erro: ' + e.message); }
+    if (json.status === 'ok') {
+      atualizarSyncStatus('ok');
+      alert('Sincronizado!');
+    } else {
+      atualizarSyncStatus('err');
+      alert('Erro: ' + json.msg);
+    }
+  } catch(e) {
+    atualizarSyncStatus('err');
+    alert('Erro: ' + e.message);
+  }
 }
 
-function limparDados() {
-  if (!confirm('Apagar TODOS os dados?')) return;
-  pacientes = [];
-  sessoes = [];
-  salvarDados();
-  renderizar();
-  alert('Dados apagados');
+async function puxarDadosSheets() {
+  if (!cfg.url) { alert('Configure URL primeiro'); return; }
+  try {
+    const res = await fetch(cfg.url, {method: 'POST', body: JSON.stringify({action: 'sync', pacientes: [], sessoes: []})});
+    const json = await res.json();
+    if (json.status === 'ok') {
+      if (json.pacientes && json.pacientes.length) pacientes = json.pacientes;
+      if (json.sessoes && json.sessoes.length) sessoes = json.sessoes;
+      salvarDados();
+      renderizar();
+      atualizarSyncStatus('ok');
+      alert('Dados do Sheets carregados!');
+    }
+  } catch(e) {
+    atualizarSyncStatus('err');
+    alert('Erro: ' + e.message);
+  }
+}
+
+function atualizarSyncStatus(status) {
+  const dot = document.getElementById('sync-dot');
+  const label = document.getElementById('sync-label');
+  if (status === 'ok') {
+    dot.className = 'sync-dot ok';
+    label.textContent = 'Sincronizado';
+  } else if (status === 'err') {
+    dot.className = 'sync-dot err';
+    label.textContent = 'Erro de sincronização';
+  } else {
+    dot.className = 'sync-dot';
+    label.textContent = 'Offline';
+  }
 }
 
 document.querySelectorAll('.modal-fundo').forEach(m => {
@@ -847,8 +1217,10 @@ document.querySelectorAll('.modal-fundo').forEach(m => {
 });
 
 document.getElementById('cfg-url').value = cfg.url;
-document.getElementById('aviso').style.display = cfg.url ? 'none' : 'block';
+document.getElementById('rel-mes').value = new Date().toISOString().slice(0, 7);
+initTheme();
 renderizar();
+renderizarTemplates();
 </script>
 
 </body>
