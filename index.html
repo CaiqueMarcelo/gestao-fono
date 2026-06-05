@@ -624,24 +624,44 @@ input:focus, select:focus, textarea:focus {
       
       <div class="form-grupo">
         <label>Paciente (Opcional)</label>
-        <select id="msg-paciente" onchange="atualizarMsg()">
+        <select id="msg-paciente" onchange="atualizarMsg()" style="width:100%;padding:10px;border:1px solid var(--cor-borda);border-radius:8px;font-size:13px;margin-bottom:10px;background:var(--bg-card);color:var(--text-primary);">
           <option value="">-- Sem paciente específico --</option>
         </select>
       </div>
 
-      <div class="tabs-msg">
-        <button class="tab-msg ativo" onclick="selecionarTipoMsg(this, 'lembrete')">Lembrete</button>
-        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'confirmacao')">Confirmar</button>
-        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'cobranca')">Cobrança</button>
-        <button class="tab-msg" onclick="selecionarTipoMsg(this, 'cancelamento')">Cancelamento</button>
+      <div style="margin: 1.5rem 0;">
+        <strong style="color: var(--cor-verde); display: block; margin-bottom: 10px;">Tipo de Mensagem:</strong>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem;">
+          <button class="badge badge-verde" onclick="selecionarTipoMsg(this, 'lembrete')" style="cursor:pointer; padding:8px 14px; font-size:13px;">Lembrete</button>
+          <button class="badge badge-lilas" onclick="selecionarTipoMsg(this, 'confirmacao')" style="cursor:pointer; padding:8px 14px; font-size:13px;">Confirmar</button>
+          <button class="badge badge-lilas" onclick="selecionarTipoMsg(this, 'cobranca')" style="cursor:pointer; padding:8px 14px; font-size:13px;">Cobrança</button>
+          <button class="badge badge-vermelho" onclick="selecionarTipoMsg(this, 'cancelamento')" style="cursor:pointer; padding:8px 14px; font-size:13px;">Cancelamento</button>
+        </div>
       </div>
 
-      <label style="color: var(--cor-verde); font-weight: 600;">Mensagem (Editável):</label>
-      <textarea id="preview-msg" style="min-height: 150px; font-family: 'Courier New', monospace;">Selecione um tipo de mensagem ou edite o texto abaixo</textarea>
+      <div style="background: var(--cor-verde-c); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; border: 2px solid var(--cor-verde);">
+        <label style="color: var(--cor-verde); font-weight: 600; display: block; margin-bottom: 10px; font-size: 13px;">Mensagem (Clique para editar):</label>
+        <textarea id="preview-msg" style="
+          width: 100%;
+          min-height: 180px;
+          padding: 12px;
+          font-size: 13px;
+          line-height: 1.7;
+          border: 1px solid var(--cor-verde);
+          border-radius: 8px;
+          background: white;
+          color: var(--text-primary);
+          font-family: 'Segoe UI', sans-serif;
+          resize: vertical;
+          box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+        ">Selecione um tipo de mensagem ou edite o texto abaixo</textarea>
+      </div>
 
-      <button class="btn" onclick="copiarMsg()">📋 Copiar</button>
-      <button class="btn btn-sec" onclick="abrirWhatsApp()" style="margin-left: 10px;">💬 Enviar WhatsApp</button>
-      <button class="btn" onclick="salvarTemplate()" style="margin-left: 10px; background: var(--cor-lilas); color: var(--cor-texto);">💾 Salvar como Template</button>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1.5rem;">
+        <button class="btn" onclick="copiarMsg()">📋 Copiar</button>
+        <button class="btn btn-sec" onclick="abrirWhatsApp()">💬 Enviar WhatsApp</button>
+        <button class="btn" onclick="salvarTemplate()" style="background: var(--cor-lilas); color: var(--text-primary);">💾 Salvar como Template</button>
+      </div>
     </div>
 
     <div class="card">
@@ -892,26 +912,82 @@ function salvarPaciente() {
   if (cfg.url) sincronizarAgora();
 }
 
+function editarSessao(id) {
+  const sessao = sessoes.find(s => s.id === id);
+  if (!sessao) { alert('Sessão não encontrada'); return; }
+  
+  const sel = document.getElementById('s-paciente');
+  sel.innerHTML = pacientes.length ? pacientes.map(p => `<option value="${p.id}" ${p.id == sessao.pacId ? 'selected' : ''}>${p.nome}</option>`).join('') : '<option>Sem pacientes</option>';
+  
+  document.getElementById('s-paciente').value = sessao.pacId;
+  document.getElementById('s-data').value = sessao.data;
+  document.getElementById('s-hora').value = sessao.hora;
+  document.getElementById('s-status').value = sessao.status;
+  document.getElementById('s-pag').value = sessao.pag;
+  document.getElementById('s-valor').value = sessao.valor;
+  
+  document.getElementById('modal-sessao').classList.add('aberto');
+  
+  // Marca para atualizar (não criar novo)
+  window.editandoSessaoId = id;
+  document.querySelector('#modal-sessao .modal-titulo').textContent = 'Editar Sessão';
+}
+
 function salvarSessao() {
   const pacId = parseInt(document.getElementById('s-paciente').value);
   const p = pacientes.find(x => x.id === pacId);
   if (!p) { alert('Selecione paciente'); return; }
   const data = document.getElementById('s-data').value;
   if (!data) { alert('Informe data'); return; }
-  sessoes.push({
-    id: Date.now(),
-    pacId,
-    pacNome: p.nome,
-    data,
-    hora: document.getElementById('s-hora').value,
-    status: document.getElementById('s-status').value,
-    pag: document.getElementById('s-pag').value,
-    valor: parseFloat(document.getElementById('s-valor').value) || p.valor || 0
-  });
+  
+  if (window.editandoSessaoId) {
+    // Editar existente
+    const sessao = sessoes.find(s => s.id === window.editandoSessaoId);
+    if (sessao) {
+      sessao.pacId = pacId;
+      sessao.pacNome = p.nome;
+      sessao.data = data;
+      sessao.hora = document.getElementById('s-hora').value;
+      sessao.status = document.getElementById('s-status').value;
+      sessao.pag = document.getElementById('s-pag').value;
+      sessao.valor = parseFloat(document.getElementById('s-valor').value) || p.valor || 0;
+    }
+    window.editandoSessaoId = null;
+    document.querySelector('#modal-sessao .modal-titulo').textContent = 'Nova Sessão';
+  } else {
+    // Criar novo
+    sessoes.push({
+      id: Date.now(),
+      pacId,
+      pacNome: p.nome,
+      data,
+      hora: document.getElementById('s-hora').value,
+      status: document.getElementById('s-status').value,
+      pag: document.getElementById('s-pag').value,
+      valor: parseFloat(document.getElementById('s-valor').value) || p.valor || 0
+    });
+  }
+  
   salvarDados();
   fecharModal('sessao');
   renderizar();
   if (cfg.url) sincronizarAgora();
+}
+
+function editarPaciente(id) {
+  const paciente = pacientes.find(p => p.id === id);
+  if (!paciente) { alert('Paciente não encontrado'); return; }
+  
+  document.getElementById('p-nome').value = paciente.nome;
+  document.getElementById('p-fone').value = paciente.fone;
+  document.getElementById('p-valor').value = paciente.valor;
+  document.getElementById('p-esp').value = paciente.esp;
+  
+  document.getElementById('modal-paciente').classList.add('aberto');
+  document.getElementById('p-nome').focus();
+  
+  window.editandoPacienteId = id;
+  document.querySelector('#modal-paciente .modal-titulo').textContent = 'Editar Paciente';
 }
 
 function deletarPaciente(id) {
@@ -958,13 +1034,16 @@ function renderAgenda() {
     <div class="item-lista">
       <div class="item-info">
         <div class="item-nome">${s.pacNome}</div>
-        <div class="item-meta">${s.data} ${s.hora} • R$ ${s.valor.toFixed(2)}</div>
+        <div class="item-meta">${s.data} ${s.hora} • R$ ${parseFloat(s.valor).toFixed(2)}</div>
         <div style="margin-top: 5px;">
           <span class="badge ${s.status === 'confirmada' ? 'badge-verde' : 'badge-vermelho'}">${s.status}</span>
-          <span class="badge ${s.pag === 'pago' ? 'badge-verde' : 'badge-lilas'}">${s.pag}</span>
+          <span class="badge ${s.pag === 'pago' ? 'badge-verde' : 'badge-lilas'}" style="margin-left: 5px;">${s.pag}</span>
         </div>
       </div>
-      <button class="btn" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
+      <div style="display: flex; gap: 5px;">
+        <button class="btn" onclick="editarSessao(${s.id})" style="background: var(--cor-verde); color: white; padding: 5px 10px; font-size: 12px;">✏️ Editar</button>
+        <button class="btn" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333; padding: 5px 10px; font-size: 12px;">✕</button>
+      </div>
     </div>
   `).join('');
 }
@@ -974,35 +1053,42 @@ function renderPacientes() {
   if (!pacientes.length) { el.innerHTML = '<p style="color: #999;">Nenhum paciente</p>'; return; }
   el.innerHTML = pacientes.map(p => {
     const pend = sessoes.filter(s => s.pacId === p.id && s.pag !== 'pago').length;
+    const valorFormatado = typeof p.valor === 'string' ? parseFloat(p.valor).toFixed(2) : parseFloat(p.valor).toFixed(2);
     return `
       <div class="item-lista">
         <div class="item-info">
           <div class="item-nome">${p.nome}</div>
-          <div class="item-meta">${p.esp} • R$ ${p.valor}/sessão ${pend ? '• ' + pend + ' pendente(s)' : '• em dia'}</div>
+          <div class="item-meta">${p.esp} • R$ ${valorFormatado}/sessão ${pend ? '• ' + pend + ' pendente(s)' : '• em dia'}</div>
         </div>
-        <button class="btn" onclick="deletarPaciente(${p.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
+        <div style="display: flex; gap: 5px;">
+          <button class="btn" onclick="editarPaciente(${p.id})" style="background: var(--cor-verde); color: white; padding: 5px 10px; font-size: 12px;">✏️</button>
+          <button class="btn" onclick="deletarPaciente(${p.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
+        </div>
       </div>
     `;
   }).join('');
 }
 
 function renderFinanceiro() {
-  const rec = sessoes.filter(s => s.pag === 'pago').reduce((a, s) => a + s.valor, 0);
-  const pend = sessoes.filter(s => s.pag === 'pendente').reduce((a, s) => a + s.valor, 0);
-  const atras = sessoes.filter(s => s.pag === 'atrasado').reduce((a, s) => a + s.valor, 0);
+  const rec = sessoes.filter(s => s.pag === 'pago').reduce((a, s) => a + parseFloat(s.valor), 0);
+  const pend = sessoes.filter(s => s.pag === 'pendente').reduce((a, s) => a + parseFloat(s.valor), 0);
+  const atras = sessoes.filter(s => s.pag === 'atrasado').reduce((a, s) => a + parseFloat(s.valor), 0);
   document.getElementById('f-rec').textContent = 'R$ ' + rec.toFixed(2);
   document.getElementById('f-pend').textContent = 'R$ ' + pend.toFixed(2);
   document.getElementById('f-atras').textContent = 'R$ ' + atras.toFixed(2);
-  
   const el = document.getElementById('lista-financeiro');
   if (!sessoes.length) { el.innerHTML = '<p style="color: #999;">Nenhuma sessão</p>'; return; }
   el.innerHTML = sessoes.map(s => `
     <div class="item-lista">
       <div class="item-info">
         <div class="item-nome">${s.pacNome}</div>
-        <div class="item-meta">${s.data} • R$ ${s.valor.toFixed(2)}</div>
+        <div class="item-meta">${s.data} • R$ ${parseFloat(s.valor).toFixed(2)}</div>
       </div>
-      <span class="badge ${s.pag === 'pago' ? 'badge-verde' : s.pag === 'atrasado' ? 'badge-vermelho' : 'badge-lilas'}">${s.pag}</span>
+      <div style="display: flex; gap: 5px; align-items: center;">
+        <span class="badge ${s.pag === 'pago' ? 'badge-verde' : s.pag === 'atrasado' ? 'badge-vermelho' : 'badge-lilas'}">${s.pag}</span>
+        <button class="btn" onclick="editarSessao(${s.id})" style="background: var(--cor-verde); color: white; padding: 5px 10px; font-size: 12px;">✏️</button>
+        <button class="btn" onclick="deletarSessao(${s.id})" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
+      </div>
     </div>
   `).join('');
 }
@@ -1085,13 +1171,30 @@ function renderizarTemplates() {
         <div class="item-nome">${k}</div>
         <div class="item-meta" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${v.substring(0, 50)}...</div>
       </div>
-      <button class="btn" onclick="copiarTemplate('${k}')" style="background: var(--cor-verde); color: white; padding: 5px 10px;">Copiar</button>
+      <div style="display: flex; gap: 5px;">
+        <button class="btn" onclick="carregarTemplate('${k}')" style="background: var(--cor-verde); color: white; padding: 5px 10px; font-size: 12px;">✏️</button>
+        <button class="btn" onclick="deletarTemplate('${k}')" style="background: #ccc; color: #333; padding: 5px 10px;">✕</button>
+      </div>
     </div>
   `).join('');
 }
 
 function copiarTemplate(k) {
   navigator.clipboard.writeText(templates[k]).then(() => alert('Copiado!')).catch(() => alert('Erro'));
+}
+
+function carregarTemplate(k) {
+  document.getElementById('preview-msg').value = templates[k];
+  document.getElementById('preview-msg').focus();
+  // Scroll para a seção de mensagens
+  document.getElementById('mensagens').scrollIntoView({ behavior: 'smooth' });
+}
+
+function deletarTemplate(k) {
+  if (!confirm(`Deletar template "${k}"?`)) return;
+  delete templates[k];
+  salvarDados();
+  renderizarTemplates();
 }
 
 function populateHistorico() {
@@ -1109,7 +1212,7 @@ function carregarHistorico() {
   el.innerHTML = hists.map(s => `
     <div class="historico-item">
       <div class="hist-data">${s.data} ${s.hora}</div>
-      <div class="hist-conteudo"><strong>Status:</strong> ${s.status} | <strong>Pagamento:</strong> ${s.pag} | <strong>Valor:</strong> R$ ${s.valor.toFixed(2)}</div>
+      <div class="hist-conteudo"><strong>Status:</strong> ${s.status} | <strong>Pagamento:</strong> ${s.pag} | <strong>Valor:</strong> R$ ${parseFloat(s.valor).toFixed(2)}</div>
     </div>
   `).join('');
 }
@@ -1149,7 +1252,7 @@ function gerarRelatorio() {
 function exportarCSV() {
   if (!sessoes.length) { alert('Sem sessões'); return; }
   const h = ['Paciente', 'Data', 'Hora', 'Status', 'Pagamento', 'Valor'];
-  const rows = sessoes.map(s => [s.pacNome, s.data, s.hora, s.status, s.pag, s.valor.toFixed(2)]);
+  const rows = sessoes.map(s => [s.pacNome, s.data, s.hora, s.status, s.pag, parseFloat(s.valor).toFixed(2)]);
   const csv = [h, ...rows].map(r => r.map(c => '"' + String(c).replace(/"/g, '""') + '"').join(';')).join('\n');
   const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv'});
   const a = document.createElement('a');
